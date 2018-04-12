@@ -1,12 +1,33 @@
 ﻿window.menuBoards.subTemplateSettings = {
     settings: null,
     currentTemplate: null,
+    listOfDefaultSettings : null,
+
+    loadDefaultSubTemplateSettings: function () {
+        var $this = this;
+
+        window.menuBoards.httpWrapper.get({
+            url: '/Slide/GetDefaultSubTemplateSettings',
+            success: function (response) {
+
+                if (response && response !== "error") {
+                    self.templateTypes = response.TemplateTypeOptions;
+                    
+                    $this.listOfDefaultSettings = response;
+                }
+            },
+            error: function () { }
+        });
+    },
 
     showDefaultTemplate: function () {
 
         if (this.settings) {
             this.appendTemplate(this.settings.HtmlTemplateId);
         }
+    },
+
+    showSelectedTemplate: function () {
     },
 
     appendTemplate: function (tmpId) {

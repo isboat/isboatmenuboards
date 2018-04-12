@@ -38,6 +38,9 @@
             },
             error: function () { }
         });
+
+        // Also load default sub template settings
+        window.menuBoards.subTemplateSettings.loadDefaultSubTemplateSettings();
     },
 
     initialiseSelectOptions: function () {
