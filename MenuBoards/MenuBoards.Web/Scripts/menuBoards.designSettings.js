@@ -1,4 +1,4 @@
-﻿window.menuBoards.designSettings = {
+﻿window.mb.designSettings = {
 
     templates: {
         mainSettings: "#settingsTpl",
@@ -20,7 +20,7 @@
 
     loadDesignSettings: function () {
         var self = this;
-        window.menuBoards.httpWrapper.get({
+        window.mb.httpWrapper.get({
             url: '/Slide/GetDesignSettings',
             success: function (response) {
 
@@ -32,15 +32,20 @@
                     self.currency = response.Currency;
                     self.currencies = response.CurrencyOptions;
 
-                    // Set sub template settings
-                    window.menuBoards.subTemplateSettings.settings = response.SubTemplateSettings;
+                    // Set template settings
+                    window.mb.templateManager.settings = response.SubTemplateSettings;
                 }
             },
             error: function () { }
         });
 
         // Also load default sub template settings
-        window.menuBoards.subTemplateSettings.loadDefaultSubTemplateSettings();
+        window.mb.templateManager.loadDefaultSubTemplateSettings();
+
+        // Register all sub templates
+        window.mb.templateManager.registerTemplate("SingleColumnBasic", "SingleColumnBasicTmpl");
+        window.mb.templateManager.registerTemplate("SingleColumnBronze", "SingleColumnBronzeTmpl");
+        window.mb.templateManager.registerTemplate("SingleColumnSilver", "SingleColumnSilverTmpl");
     },
 
     initialiseSelectOptions: function () {
@@ -67,8 +72,8 @@
         // Render currencies
         self.renderCurrencies();
 
-        // Render sub template settings
-        window.menuBoards.subTemplateSettings.showDefaultTemplate();
+        // Render template settings
+        window.mb.templateManager.showDefaultTemplate();
     },
 
     clearSelectElement: function (eleId) {
@@ -167,7 +172,7 @@
                         }
 
                         if (foundSubTemplate && foundSubTemplate.HtmlTemplateId) {
-                            window.menuBoards.subTemplateSettings.appendTemplate(foundSubTemplate
+                            window.mb.templateManager.showSelectedTemplate(foundSubTemplate
                                 .HtmlTemplateId);
                         }
                     }
@@ -190,7 +195,7 @@
     saveDesignSettings: function() {
         var self = this;
 
-        window.menuBoards.subTemplateSettings.setSettings();
+        window.mb.templateManager.setSettings();
         self.currency = $(self.$selectCurrency).val();
         self.templateType = $(self.$selectTemplateType).val();
         self.selectedSubTemplate = $(self.$selectSubTemplateDesign).val();

@@ -1,4 +1,4 @@
-﻿window.menuBoards.menuSlide = {
+﻿window.mb.menuSlide = {
 
     menus: [],
     
@@ -156,7 +156,7 @@
                     function (e) {
                         $(self.templates.deleteMenuColumnWarning).find(".deletemenuCol").on('click', function () {
                             
-                            window.menuBoards.menuSlide.deleteMenuCol(self.id);
+                            window.mb.menuSlide.deleteMenuCol(self.id);
 
                             $(self.templates.deleteMenuColumnWarning).modal("hide");
                         });
@@ -180,10 +180,10 @@
 
             saveMenu: function () {
 
-                var menuModel = window.menuBoards.helpers.convertToMenuModel(this);
+                var menuModel = window.mb.helpers.convertToMenuModel(this);
                 console.log(menuModel);
 
-                window.menuBoards.httpWrapper.post({
+                window.mb.httpWrapper.post({
                     data: menuModel,
                     url: '/Slide/SaveMenu',
                     success: function (response) {
@@ -252,7 +252,7 @@
                 delFunc();
             } else {
 
-                window.menuBoards.httpWrapper.delete({
+                window.mb.httpWrapper.delete({
                     data: menuToDelete.id,
                     url: '/Slide/DeleteMenu',
                     success: function (response) {
@@ -266,9 +266,9 @@
 }
 
 $("#addMenuCol").on("click", function () {
-    window.menuBoards.menuSlide.addMenuCol();
+    window.mb.menuSlide.addMenuCol();
 });
 
 $("#showsettingsbtn").on("click", function () {
-    window.menuBoards.designSettings.showSettings();
+    window.mb.designSettings.showSettings();
 });

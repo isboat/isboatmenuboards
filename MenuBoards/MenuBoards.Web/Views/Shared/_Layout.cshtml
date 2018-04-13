@@ -12,7 +12,7 @@
     @Scripts.Render("~/bundles/bootstrap")
 
     <script src="~/Scripts/Libs/handlebars-v4.0.11.js"></script>
-
+    <script src="~/Scripts/Libs/rivets.bundled.min.js"></script>
     @RenderSection("scripts", required: false)
 
     <script type="text/javascript">
@@ -22,8 +22,9 @@
                 return v.toString(16);
             });
         }
+        
+        window.mb = {}
 
-        window.menuBoards = {}
     </script>
     <script src="~/Scripts/menuBoards.helpers.js"></script>
     <script src="~/Scripts/menuBoards.httpWrapper.js"></script>

@@ -177,17 +177,15 @@
     <Content Include="Scripts\Libs\jquery.validate.min.js" />
     <Content Include="Scripts\Libs\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\Libs\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\Libs\rivets.bundled.min.js" />
     <Content Include="Scripts\menuBoards.helpers.js" />
     <Content Include="Scripts\menuBoards.httpWrapper.js" />
     <Content Include="Scripts\menuBoards.designSettings.js" />
     <Content Include="Scripts\menuBoards.menuSlide.js" />
-    <Content Include="Scripts\menuBoards.subTemplateSettings.js" />
+    <Content Include="Scripts\menuBoards.templateManager.js" />
     <Content Include="Scripts\Libs\modernizr-2.6.2.js" />
     <Content Include="Scripts\Libs\respond.js" />
     <Content Include="Scripts\Libs\respond.min.js" />
-    <Content Include="Scripts\SettingTemplates\SingleColumnBasic.js" />
-    <Content Include="Scripts\SettingTemplates\SingleColumnBronze.js" />
-    <Content Include="Scripts\SettingTemplates\SingleColumnSilver.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

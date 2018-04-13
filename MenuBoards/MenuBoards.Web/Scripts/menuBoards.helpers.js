@@ -1,4 +1,4 @@
-﻿window.menuBoards.helpers = {
+﻿window.mb.helpers = {
     convertToMenuModel: function (menu) {
         var menuModel = {
             id: menu.id,

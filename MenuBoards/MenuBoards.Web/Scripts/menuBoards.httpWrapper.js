@@ -1,4 +1,4 @@
-﻿window.menuBoards.httpWrapper = {
+﻿window.mb.httpWrapper = {
 
     get: function (options) {
         $.ajax({
