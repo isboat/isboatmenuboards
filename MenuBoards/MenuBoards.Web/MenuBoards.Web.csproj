@@ -200,13 +200,14 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Slide\CreateMenuSlide.cshtml" />
     <Content Include="Views\Slide\SlideDetails.cshtml" />
     <Content Include="Views\Shared\MenuSlideDesignSettings.cshtml" />
     <Content Include="Views\Shared\SettingsTemplates\SingleColumnBasic.cshtml" />
     <Content Include="Views\Shared\SettingsTemplates\SingleColumnBronze.cshtml" />
     <Content Include="Views\Shared\SettingsTemplates\SingleColumnSilver.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Slide\ViewAllSlides.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

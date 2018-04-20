@@ -48,7 +48,33 @@ namespace MenuBoards.Web.Controllers
             }
         }
 
+        public ActionResult ViewAllSlides()
+        {
+            try
+            {
+                var slides = this.slideService.GetAllSlides();
+                return View(slides);
+            }
+            catch
+            {
+                return RedirectToAction("Index","Home");
+            }
+        }
+
         public ActionResult SlideDetails(int id)
+        {
+            try
+            {
+                var slide = this.slideService.GetSlideDetails(id);
+                return View(slide);
+            }
+            catch
+            {
+                return RedirectToAction("Index");
+            }
+        }
+
+        public ActionResult DeleteSlide(int id)
         {
             try
             {

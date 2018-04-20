@@ -8,7 +8,11 @@ namespace MenuBoards.Interfaces.Web
     {
         int CreateMenuSlide(MenuSlide model);
 
+        List<MenuSlide> GetAllSlides();
+
         MenuSlide GetSlideDetails(int id);
+
+        BaseResponse DeleteSlide(int id);
 
         DesignSettings GetDesignSettings(string slideId);
 

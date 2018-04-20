@@ -20,6 +20,33 @@ namespace MenuBoards.Web.ModelServices
             return 1;
         }
 
+        public List<MenuSlide> GetAllSlides()
+        {
+            var slides = new List<MenuSlide>
+            {
+                new MenuSlide
+                {
+                    Id = 1,
+                    Name = "Some slide name",
+                    SlideType = SlideType.Menu
+                },
+                new MenuSlide
+                {
+                    Id = 3,
+                    Name = "A video slide name",
+                    SlideType = SlideType.Video
+                },
+                new MenuSlide
+                {
+                    Id = 4,
+                    Name = "Some slide name",
+                    SlideType = SlideType.Menu
+                }
+            };
+
+            return slides;
+        }
+
         public MenuSlide GetSlideDetails(int id)
         {
             return new MenuSlide
@@ -28,6 +55,11 @@ namespace MenuBoards.Web.ModelServices
                 Name = "Some slide name",
                 SlideType = SlideType.Menu
             };
+        }
+
+        public BaseResponse DeleteSlide(int id)
+        {
+            return new BaseResponse {Success = true};
         }
 
         public DesignSettings GetDesignSettings(string slideId)

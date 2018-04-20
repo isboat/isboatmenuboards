@@ -1,61 +1,30 @@
-﻿<div>Dashboard screen</div>
-
-<div>
-    <div class="panel-group">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" href="#globalSettings">Global Settings</a>
-                </h4>
-            </div>
-            <div id="globalSettings" class="panel-collapse collapse">
-                <div class="panel-body">Show global settings here</div>
-            </div>
-        </div>
-    </div>
+﻿<div class="jumbotron">
+    <h1>Dashboard</h1>
+    <p class="lead"></p>
+    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
 </div>
 
-<div>
-    <div class="panel-group">
-        <div class="panel panel-success">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" href="#listOfScreens">List of screens</a>
-                </h4>
-            </div>
-            <div id="listOfScreens" class="panel-collapse collapse">
-                <div class="panel-body">Show list of screens here</div>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div>
-    <div class="panel-group">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" href="#listOfSlideGroups">List of slide groups</a>
-                </h4>
-            </div>
-            <div id="listOfSlideGroups" class="panel-collapse collapse">
-                <div class="panel-body">Show list of slide groups here</div>
-            </div>
-        </div>
+<div class="row">
+    <div class="col-md-4">
+        <h2>Global Settings</h2>
+        <p>
+            This allows you to set preferences and settings that apply to all slides and groups
+        </p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Settings &raquo;</a></p>
     </div>
-</div>
-
-<div>
-    <div class="panel-group">
-        <div class="panel panel-danger">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" href="#individualSlides">Individual slides</a>
-                </h4>
-            </div>
-            <div id="individualSlides" class="panel-collapse collapse">
-                <div class="panel-body">Show list of individual slides here</div>
-            </div>
-        </div>
+    <div class="col-md-4">
+        <h2>View Slides</h2>
+        <p>View all slides</p>
+        <p>
+            @Html.ActionLink("View All", "ViewAllSlides", "Slide", null, new { @class = "btn btn-default" })
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h2>Preview</h2>
+        <p>
+            Click to preview slides
+        </p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Preview &raquo;</a></p>
     </div>
 </div>
