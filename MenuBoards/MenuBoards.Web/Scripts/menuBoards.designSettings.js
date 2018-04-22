@@ -195,7 +195,7 @@
     saveDesignSettings: function() {
         var self = this;
 
-        window.mb.templateManager.setSettings();
+        window.mb.templateManager.updateSettings();
         self.currency = $(self.$selectCurrency).val();
         self.templateType = $(self.$selectTemplateType).val();
         self.selectedSubTemplate = $(self.$selectSubTemplateDesign).val();

@@ -72,7 +72,6 @@
 
         this.currentTemplate = tmpId;
         this.templateListIndexer[this.currentTemplate].render(values);
-        //window.settingsTemplates[this.currentTemplate].render(values);
     },
 
     updateSettings: function() {
