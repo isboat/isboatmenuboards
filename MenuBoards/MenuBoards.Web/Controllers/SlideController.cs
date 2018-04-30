@@ -15,7 +15,7 @@ namespace MenuBoards.Web.Controllers
     {
         private readonly ISlideService slideService = new SlideService();
 
-        private readonly ISubTemplateSettingService subTemplateSettingService = new SubTemplateSettingService();
+        private readonly ITemplateSettingService subTemplateSettingService = new TemplateSettingService();
         
         // GET: Slide/Create
         public ActionResult CreateMenuSlide()
@@ -134,6 +134,34 @@ namespace MenuBoards.Web.Controllers
             {
                 var designs = this.slideService.GetDesignSettings(slideId);
                 return Json(designs, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json("error", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult SaveDesignSettings(SaveDesignSettings settings)
+        {
+            try
+            {
+                var response = this.slideService.GetDesignSettings(settings);
+                return Json(response, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json("error", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult SaveSubTemplateSettings(SaveDesignSettings settings)
+        {
+            try
+            {
+                var response = this.slideService.GetDesignSettings(settings);
+                return Json(response, JsonRequestBehavior.AllowGet);
             }
             catch
             {

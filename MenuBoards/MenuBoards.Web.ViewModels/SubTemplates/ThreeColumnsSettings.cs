@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MenuBoards.Web.ViewModels.SubTemplates
 {
-    public class ThreeColumnsSettings : ISubTemplateSetting
+    public class ThreeColumnsSettings : ITemplateSetting
     {
         public string Id { get; set; }
         public string HtmlTemplateId => "";// RenderingTemplateId id.html as a template

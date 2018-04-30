@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace MenuBoards.Web.ViewModels.SubTemplates
 {
-    public interface ISubTemplateSetting
+    public interface ITemplateSetting
     {
-        string HtmlTemplateId { get; }
     }
 }

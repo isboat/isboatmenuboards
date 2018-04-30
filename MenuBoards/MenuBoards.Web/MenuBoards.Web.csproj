@@ -152,7 +152,7 @@
     <Compile Include="ModelServices\AccountService.cs" />
     <Compile Include="ModelServices\EnumHelper.cs" />
     <Compile Include="ModelServices\SlideService.cs" />
-    <Compile Include="ModelServices\SubTemplateSettingService.cs" />
+    <Compile Include="ModelServices\TemplateSettingService.cs" />
     <Compile Include="ModelServices\UIHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -8,11 +8,11 @@ namespace MenuBoards.Web.ModelServices
 {
     public class SlideService: ISlideService
     {
-        private readonly ISubTemplateSettingService settingService;
+        private readonly ITemplateSettingService settingService;
 
         public SlideService()
         {
-            this.settingService = new SubTemplateSettingService();
+            this.settingService = new TemplateSettingService();
         }
 
         public int CreateMenuSlide(MenuSlide model)
@@ -69,19 +69,23 @@ namespace MenuBoards.Web.ModelServices
                 Id = "",
                 SlideId = slideId,
                 TemplateType = "1",
-                SelectedSubTemplate = "1",
+                SubTemplate = "1",
                 Currency = "EUR"
             };
 
-            design.SubTemplateSettings = this.settingService.GetSubTemplateSettings(design.SubTemplateSettingsId,
-                design.SelectedSubTemplate, design.TemplateType);
+            design.TemplateSettings = this.settingService.GetTemplateSettings(design.Id, design.TemplateType);
 
-            var templates = this.GetMenuTemplates();
+            var templates = this.GetAllTemplates();
             design.TemplateTypeOptions = UiHelper.GetTemplateTypeOptions(templates, design.TemplateType);
             design.CurrencyOptions = UiHelper.GetCurrencyOptions(design.Currency);
-            design.SubTemplates = this.GetAllSubDesignTemplates(design.SelectedSubTemplate);
+            design.SubTemplates = this.GetAllSubDesignTemplates(design.SubTemplate);
 
             return design;
+        }
+
+        public BaseResponse GetDesignSettings(SaveDesignSettings settings)
+        {
+            return new BaseResponse {Success = true};
         }
 
         public BaseResponse SaveMenu(Menu menu)
@@ -112,7 +116,7 @@ namespace MenuBoards.Web.ModelServices
             return list;
         }
 
-        private List<MenuTemplateType> GetMenuTemplates()
+        private List<MenuTemplateType> GetAllTemplates()
         {
             var list = new List<MenuTemplateType>
             {

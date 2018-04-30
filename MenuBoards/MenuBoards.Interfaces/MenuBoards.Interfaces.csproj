@@ -40,11 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataAccess\ISubTemplateSettingsRepository.cs" />
+    <Compile Include="DataAccess\ITemplateSettingsRepository.cs" />
     <Compile Include="Web\IAccountService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Web\ISlideService.cs" />
-    <Compile Include="Web\ISubTemplateSettingService.cs" />
+    <Compile Include="Web\ITemplateSettingService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MenuBoards.Web.ViewModels\MenuBoards.Web.ViewModels.csproj">

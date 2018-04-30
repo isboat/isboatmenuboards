@@ -77,8 +77,8 @@
     <Compile Include="SubTemplateSelectionItem.cs" />
     <Compile Include="SubTemplates\SingleColumnBasicSettings.cs" />
     <Compile Include="SubTemplates\SingleColumnBronzeSettings.cs" />
-    <Compile Include="SubTemplates\ISubTemplateSettings.cs" />
-    <Compile Include="SubTemplates\SingleColumnSilverSettings.cs" />
+    <Compile Include="SubTemplates\ITemplateSettings.cs" />
+    <Compile Include="SubTemplates\SingleColumnSettings.cs" />
     <Compile Include="SubTemplates\ThreeColumnsSettings.cs" />
     <Compile Include="SubTemplates\TwoColumnsSettings.cs" />
   </ItemGroup>

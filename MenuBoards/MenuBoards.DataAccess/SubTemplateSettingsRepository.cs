@@ -8,11 +8,11 @@ using MenuBoards.Web.ViewModels.SubTemplates;
 
 namespace MenuBoards.DataAccess
 {
-    public class SubTemplateSettingsRepository: ISubTemplateSettingsRepository
+    public class SubTemplateSettingsRepository: ITemplateSettingsRepository
     {
-        public SingleColumnBasicSettings GetSingleColumnBasicSettings(string settingsId)
+        public SingleColumnSettings GetSingleColumnSettings(string settingsId)
         {
-            return new SingleColumnBasicSettings
+            return new SingleColumnSettings
             {
                 Id = "dffdfs",
                 BackgroundColor = "black",

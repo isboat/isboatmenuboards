@@ -14,11 +14,9 @@ namespace MenuBoards.Web.ViewModels
 
         public string TemplateType { get; set; }
 
-        public string SelectedSubTemplate { get; set; }
+        public string SubTemplate { get; set; }
 
-        public string SubTemplateSettingsId { get; set; }
-
-        public ISubTemplateSetting SubTemplateSettings { get; set; }
+        public ITemplateSetting TemplateSettings { get; set; }
 
         #region Select options
 
@@ -29,5 +27,20 @@ namespace MenuBoards.Web.ViewModels
         public List<SubTemplateSelectionItem> SubTemplates { get; set; }
 
         #endregion
+    }
+
+    public class SaveDesignSettings
+    {
+        public string Id { get; set; }
+
+        public string Currency { get; set; }
+        
+        public string SlideId { get; set; }
+
+        public string TemplateType { get; set; }
+
+        public string SelectedSubTemplate { get; set; }
+
+        public string SubTemplateSettingsId { get; set; }
     }
 }

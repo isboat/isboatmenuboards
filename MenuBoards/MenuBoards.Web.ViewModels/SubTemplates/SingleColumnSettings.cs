@@ -1,8 +1,8 @@
 ﻿namespace MenuBoards.Web.ViewModels.SubTemplates
 {
-    public class SingleColumnSilverSettings: ISubTemplateSetting
+    public class SingleColumnSettings: ITemplateSetting
     {
-        public SingleColumnSilverSettings()
+        public SingleColumnSettings()
         {
             this.BackgroundColor = "blue";
             this.HeadingBkgdColor = "white";
@@ -10,8 +10,6 @@
         }
 
         public string Id { get; set; }
-
-        public string HtmlTemplateId => "SingleColumnSilver";
 
         public string DesignId { get; set; }
 

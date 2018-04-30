@@ -199,5 +199,32 @@
         self.currency = $(self.$selectCurrency).val();
         self.templateType = $(self.$selectTemplateType).val();
         self.selectedSubTemplate = $(self.$selectSubTemplateDesign).val();
+
+        window.mb.httpWrapper.post({
+            url: '/Slide/saveDesignSettings',
+            data: {
+                currency: self.currency,
+                templateType: self.templateType,
+                selectedSubTemplate: self.selectedSubTemplate,
+                subTemplateSettings: window.mb.templateManager.settings
+            },
+            success: function (response) {
+
+
+                window.mb.httpWrapper.post({
+                    url: '/Slide/saveSubTemplateSettings',
+                    data: {
+                        settings: window.mb.templateManager.settings
+                    },
+                    success: function (response) {
+
+                    },
+                    error: function () { }
+                });
+
+
+            },
+            error: function () { }
+        });
     }
 }

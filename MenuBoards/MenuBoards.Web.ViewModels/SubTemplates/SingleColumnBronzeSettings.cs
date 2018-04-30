@@ -1,6 +1,6 @@
 ﻿namespace MenuBoards.Web.ViewModels.SubTemplates
 {
-    public class SingleColumnBronzeSettings : ISubTemplateSetting
+    public class SingleColumnBronzeSettings : ITemplateSetting
     {
         public SingleColumnBronzeSettings()
         {

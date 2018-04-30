@@ -1,6 +1,6 @@
 ﻿namespace MenuBoards.Web.ViewModels.SubTemplates
 {
-    public class SingleColumnBasicSettings : ISubTemplateSetting
+    public class SingleColumnBasicSettings : ITemplateSetting
     {
         public SingleColumnBasicSettings()
         {

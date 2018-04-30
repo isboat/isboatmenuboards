@@ -16,6 +16,8 @@ namespace MenuBoards.Interfaces.Web
 
         DesignSettings GetDesignSettings(string slideId);
 
+        BaseResponse GetDesignSettings(SaveDesignSettings settings);
+
         BaseResponse SaveMenu(Menu menu);
 
         BaseResponse DeleteMenu(string id);
