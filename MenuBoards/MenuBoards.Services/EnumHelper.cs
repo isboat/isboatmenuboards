@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Web;
+using System.Reflection;
 
-namespace MenuBoards.Web.ModelServices
+namespace MenuBoards.Services
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.Linq;
-    using System.Reflection;
-
     public static class EnumHelper<T>
     {
         public static IList<T> GetValues(Enum value)

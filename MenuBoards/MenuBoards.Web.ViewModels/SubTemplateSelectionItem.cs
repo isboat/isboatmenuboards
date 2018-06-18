@@ -15,7 +15,5 @@ namespace MenuBoards.Web.ViewModels
         public string Name { get; set; }
 
         public bool Selected { get; set; }
-
-        public string HtmlTemplateId { get; set; }
     }
 }

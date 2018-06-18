@@ -1,33 +1,43 @@
-﻿@model IEnumerable<MenuBoards.Web.ViewModels.MenuSlide>
+﻿@model IEnumerable<MenuBoards.Web.ViewModels.Slide>
 
 <p>
-    @Html.ActionLink("Create Menu Slide", "CreateMenuSlide")
+    @Html.ActionLink("Create Menu Slide", "CreateMenuSlide") |
     @Html.ActionLink("Create Video Slide", "CreateMenuSlide")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.GoLiveDateTime)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GoLiveDateTime)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "SlideDetails", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "DeleteSlide", new { id=item.Id })
-        </td>
-    </tr>
+@if (Model.Any())
+{
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                Go live date and time
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GoLiveDateTime)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "SlideDetails", new {id = item.Id}) |
+                    @Html.ActionLink("Delete", "DeleteSlide", new {id = item.Id})
+                </td>
+            </tr>
+        }
+
+    </table>
 }
-
-</table>
+else
+{
+    <small>no slide available</small>
+}

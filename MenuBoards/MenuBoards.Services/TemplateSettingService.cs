@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using MenuBoards.DataAccess;
 using MenuBoards.Interfaces.DataAccess;
 using MenuBoards.Interfaces.Web;
-using MenuBoards.Web.ViewModels;
 using MenuBoards.Web.ViewModels.SubTemplates;
 
-namespace MenuBoards.Web.ModelServices
+namespace MenuBoards.Services
 {
     public class TemplateSettingService: ITemplateSettingService
     {
-        private readonly ITemplateSettingsRepository repository;
+        private readonly ISettingsRepository repository;
 
         public TemplateSettingService()
         {
-            this.repository = new SubTemplateSettingsRepository();
+            this.repository = new SettingsRepository();
         }
 
         public ITemplateSetting GetTemplateSettings(string settingId, string templateType)
@@ -33,8 +29,6 @@ namespace MenuBoards.Web.ModelServices
         {
             var list = new List<ITemplateSetting>
             {
-                new SingleColumnBasicSettings(),
-                new SingleColumnBronzeSettings(),
                 new SingleColumnSettings()
             };
 

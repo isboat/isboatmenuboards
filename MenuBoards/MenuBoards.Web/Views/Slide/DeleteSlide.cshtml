@@ -1,0 +1,14 @@
+﻿@model MenuBoards.Web.ViewModels.BaseResponse
+
+@if (Model.Success)
+{
+    <div class="alert alert-success">
+        <strong>Success!</strong> slide deleted.
+    </div>
+}
+else
+{
+    <div class="alert alert-warning">
+        <strong>Warning!</strong> @Model.Message.
+    </div>
+}

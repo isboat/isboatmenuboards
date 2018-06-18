@@ -41,7 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SubTemplateSettingsRepository.cs" />
+    <Compile Include="SettingsRepository.cs" />
+    <Compile Include="MenuSlideRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MenuBoards.Interfaces\MenuBoards.Interfaces.csproj">

@@ -2,27 +2,11 @@
 @model MenuBoards.Web.ViewModels.MenuSlide
 
 <div>
-    <h4>MenuSlide</h4>
+    <h4>@Html.DisplayFor(model => model.Name)</h4>
     <hr />
     <dl class="dl-horizontal">
 
         @Html.HiddenFor(model => model.Id)
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.GoLiveDateTime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.GoLiveDateTime)
-        </dd>
     </dl>
 </div>
 
@@ -36,7 +20,7 @@
             </div>
             <div class="panel-body">
                 <button type="button" id="showsettingsbtn" class="btn btn-info">Design Settings</button>
-                <button type="button" id="showsettingsbtn" class="btn btn-info">Display Settings</button>
+                <button type="button" id="showdisplaysettingsbtn" class="btn btn-info">Display Settings</button>
             </div>
         </div>
     </div>
@@ -74,11 +58,14 @@
 
 <script id="menuItemDisplayTpl" type="text/template">
 
-    <div style="margin-bottom: 25px">
-        <div class="mi-label"></div>
-        <div class="mi-size"></div>
-        <div class="mi-price"></div>
-        <div class="mi-subtext"></div>
+    <div class="alert alert-info menuitem-display">
+        <div><span>Label:</span> <span class="mi-label"></span></div>
+        <div><span>Size: </span><span class="mi-size"></span></div>
+        <div><span>Price: </span><span class="mi-price"></span></div>
+        <div><span>Sub text:</span><span class="mi-subtext"></span></div>
+        <button type="button" class="btn btn-primary editMenuItem">Edit</button>
+        <button type="button" class="btn btn-success addImage">Add Image</button>
+        <button type="button" class="btn btn-danger delMenuItem">Delete</button>
     </div>
 
 </script>
@@ -110,6 +97,26 @@
     </form>
 </script>
 
+<div class="modal fade" id="addImageModal" tabindex="-1" role="dialog" aria-labelledby="addImageModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addImageModalLabel">Select Image</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div>Loading...</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="add btn btn-primary" disabled="disabled">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="addmenuitemModal" tabindex="-1" role="dialog" aria-labelledby="addmenuitemModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -121,6 +128,8 @@
             </div>
             <div class="modal-body">
                 <form>
+                    <input type="hidden" class="menuitem-id"/>
+
                     <div class="form-group">
                         <input class="menuitem-label form-control" type="text" placeholder="Menu Label" name="menuitem-price-input">
                     </div>
@@ -157,11 +166,16 @@
     </div>
 </div>
 
+<script type="text/javascript">
+    window.mb.slideId = '@Model.Id'
+</script>
 
 <script src="~/Scripts/menuBoards.menuSlide.js?@DateTime.Now.Ticks"></script>
 
 @Html.Partial("MenuSlideDesignSettings")
+@Html.Partial("DisplaySettings")
 
 
-@Html.Partial("SettingsTemplates/SingleColumnBasic")
-@Html.Partial("SettingsTemplates/SingleColumnBronze")
+@Html.Partial("SettingsTemplates/SingleColumn")
+@Html.Partial("SettingsTemplates/TwoColumn")
+@Html.Partial("SettingsTemplates/ThreeColumn")

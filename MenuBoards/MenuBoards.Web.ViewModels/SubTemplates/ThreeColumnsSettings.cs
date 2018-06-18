@@ -8,8 +8,14 @@ namespace MenuBoards.Web.ViewModels.SubTemplates
 {
     public class ThreeColumnsSettings : ITemplateSetting
     {
+        public ThreeColumnsSettings()
+        {
+            this.BackgroundColor = "white";
+            this.HeadingBkgdColor = "yellow";
+        }
+
         public string Id { get; set; }
-        public string HtmlTemplateId => "";// RenderingTemplateId id.html as a template
+        public string DesignId { get; set; }
 
         public string SubTemplateId { get; set; }
 
@@ -36,5 +42,7 @@ namespace MenuBoards.Web.ViewModels.SubTemplates
         public string ImageTwoUrl { get; set; }
 
         public string ImageThreeUrl { get; set; }
+
+        public string HtmlTemplateId => "ThreeColumn";
     }
 }

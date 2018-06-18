@@ -3,22 +3,7 @@
     currentTemplate: null,
     listOfDefaultSettings: null,
     templateListIndexer: {},
-
-    loadDefaultSubTemplateSettings: function () {
-        var $this = this;
-
-        window.mb.httpWrapper.get({
-            url: '/Slide/GetDefaultSubTemplateSettings',
-            success: function (response) {
-
-                if (response && response !== "error") {
-                    $this.listOfDefaultSettings = response;
-                }
-            },
-            error: function () { }
-        });
-    },
-
+    
     registerTemplate: function (templateName, eleIdentifier) {
         var self = this;
 
@@ -43,10 +28,15 @@
         self.templateListIndexer[templateName] = templ;
     },
 
-    showDefaultTemplate: function () {
-
-        if (this.settings) {
-            this.renderTemplate(this.settings.HtmlTemplateId, this.settings);
+    showTemplateSettings: function () {
+        var self = this;
+        if (self.settings) {
+            self.renderTemplate(self.settings.HtmlTemplateId, self.settings);
+        } else {
+            var first = self.listOfDefaultSettings[0];
+            if (first) {
+                self.showSelectedTemplate(first.HtmlTemplateId);
+            }
         }
     },
 

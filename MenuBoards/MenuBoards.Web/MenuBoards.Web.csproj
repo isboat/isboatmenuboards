@@ -143,26 +143,25 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DisplayController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImagePickerController.cs" />
     <Compile Include="Controllers\SlideController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="ModelServices\AccountService.cs" />
-    <Compile Include="ModelServices\EnumHelper.cs" />
-    <Compile Include="ModelServices\SlideService.cs" />
-    <Compile Include="ModelServices\TemplateSettingService.cs" />
-    <Compile Include="ModelServices\UIHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\jquery.datetimepicker.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\salad.PNG" />
     <Content Include="Scripts\Libs\bootstrap.js" />
     <Content Include="Scripts\Libs\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -173,11 +172,13 @@
     <Content Include="Scripts\Libs\jquery-1.10.2.js" />
     <Content Include="Scripts\Libs\jquery-1.10.2.min.js" />
     <None Include="Scripts\Libs\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\Libs\jquery.datetimepicker.full.js" />
     <Content Include="Scripts\Libs\jquery.validate.js" />
     <Content Include="Scripts\Libs\jquery.validate.min.js" />
     <Content Include="Scripts\Libs\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\Libs\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\Libs\rivets.bundled.min.js" />
+    <Content Include="Scripts\menuBoards.displaySettings.js" />
     <Content Include="Scripts\menuBoards.helpers.js" />
     <Content Include="Scripts\menuBoards.httpWrapper.js" />
     <Content Include="Scripts\menuBoards.designSettings.js" />
@@ -203,15 +204,23 @@
     <Content Include="Views\Slide\CreateMenuSlide.cshtml" />
     <Content Include="Views\Slide\SlideDetails.cshtml" />
     <Content Include="Views\Shared\MenuSlideDesignSettings.cshtml" />
-    <Content Include="Views\Shared\SettingsTemplates\SingleColumnBasic.cshtml" />
-    <Content Include="Views\Shared\SettingsTemplates\SingleColumnBronze.cshtml" />
-    <Content Include="Views\Shared\SettingsTemplates\SingleColumnSilver.cshtml" />
+    <Content Include="Views\Shared\SettingsTemplates\SingleColumn.cshtml" />
+    <Content Include="Views\Shared\SettingsTemplates\TwoColumn.cshtml" />
+    <Content Include="Views\Shared\SettingsTemplates\ThreeColumn.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Slide\ViewAllSlides.cshtml" />
+    <Content Include="Views\Slide\DeleteSlide.cshtml" />
+    <Content Include="Views\Shared\DisplaySettings.cshtml" />
+    <Content Include="Views\Display\MenuSlide.cshtml" />
+    <Content Include="Views\Display\SingleColumn\SCBasic.cshtml" />
+    <Content Include="Views\Display\_MenuSlideLayout.cshtml" />
+    <Content Include="Views\Display\SingleColumn\SCBronze.cshtml" />
+    <Content Include="Views\ImagePicker\LoadImages.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Account\" />
+    <Folder Include="Views\Content\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -234,6 +243,10 @@
     <ProjectReference Include="..\MenuBoards.Interfaces\MenuBoards.Interfaces.csproj">
       <Project>{B95E8D8E-83EF-434F-A087-5D798388E02A}</Project>
       <Name>MenuBoards.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MenuBoards.Services\MenuBoards.Services.csproj">
+      <Project>{BA02B529-13BD-4F86-BA03-938029593B14}</Project>
+      <Name>MenuBoards.Services</Name>
     </ProjectReference>
     <ProjectReference Include="..\MenuBoards.Web.ViewModels\MenuBoards.Web.ViewModels.csproj">
       <Project>{8a6fac0c-1dfd-42d7-bbc7-3c4dbea7e7b1}</Project>

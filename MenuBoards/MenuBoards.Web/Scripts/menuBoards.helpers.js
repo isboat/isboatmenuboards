@@ -1,15 +1,16 @@
 ﻿window.mb.helpers = {
     convertToMenuModel: function (menu) {
         var menuModel = {
-            id: menu.id,
-            mainMenuHeading: menu.heading,
-            menuItems: []
+            Id: menu.Id,
+            SlideId: menu.SlideId,
+            MainMenuHeading: menu.Heading,
+            MenuItems: []
         }
 
-        if (menu.menuItems) {
-            for (var prop in menu.menuItems) {
-                if (menu.menuItems.hasOwnProperty(prop)) {
-                    menuModel.menuItems.push(menu.menuItems[prop]);
+        if (menu.MenuItems) {
+            for (var prop in menu.MenuItems) {
+                if (menu.MenuItems.hasOwnProperty(prop)) {
+                    menuModel.MenuItems.push(menu.MenuItems[prop]);
                 }
             }
         }

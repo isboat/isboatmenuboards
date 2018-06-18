@@ -4,9 +4,18 @@
     {
         public SingleColumnSettings()
         {
-            this.BackgroundColor = "blue";
-            this.HeadingBkgdColor = "white";
-            this.HeadingColor = "red";
+            this.BackgroundColor = "white";
+
+            // Heading
+            this.HeadingBkgdColor = "saddlebrown";
+            this.HeadingColor = "white";
+            this.HeadingTextSize = "20";
+
+            // Menu item
+            this.MenuItemColor = "black";
+            this.MenuItemTextSize = "15";
+            this.MenuItemPriceTextSize= "15";
+            this.MenuItemSubTextSize = "13";
         }
 
         public string Id { get; set; }
@@ -34,5 +43,7 @@
         public string MenuItemPriceTextSize { get; set; }
 
         public string ImageUrl { get; set; }
+
+        public string HtmlTemplateId => "SingleColumn";
     }
 }

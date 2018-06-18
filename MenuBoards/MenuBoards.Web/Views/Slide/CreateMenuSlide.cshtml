@@ -5,7 +5,7 @@
     @Html.AntiForgeryToken()
     
 <div class="form-horizontal">
-    <h4>MenuSlide</h4>
+    <h4>Create menu slide</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -26,5 +26,5 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "ViewAllSlides", "Slide")
 </div>

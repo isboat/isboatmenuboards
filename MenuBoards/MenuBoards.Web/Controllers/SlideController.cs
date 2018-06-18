@@ -6,14 +6,14 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using MenuBoards.Interfaces.Web;
-using MenuBoards.Web.ModelServices;
+using MenuBoards.Services;
 using MenuBoards.Web.ViewModels;
 
 namespace MenuBoards.Web.Controllers
 {
     public class SlideController : Controller
     {
-        private readonly ISlideService slideService = new SlideService();
+        private readonly ISlideService slideService = IoC.Instance;
 
         private readonly ITemplateSettingService subTemplateSettingService = new TemplateSettingService();
         
@@ -34,7 +34,7 @@ namespace MenuBoards.Web.Controllers
                 if (model != null && !string.IsNullOrEmpty(model.Name))
                 {
                     var slideId = this.slideService.CreateMenuSlide(model);
-                    if (slideId > 0)
+                    if (!string.IsNullOrEmpty(slideId))
                     {
                         return RedirectToAction("SlideDetails", new {id = slideId});
                     }
@@ -61,11 +61,11 @@ namespace MenuBoards.Web.Controllers
             }
         }
 
-        public ActionResult SlideDetails(int id)
+        public ActionResult SlideDetails(string id)
         {
             try
             {
-                var slide = this.slideService.GetSlideDetails(id);
+                var slide = this.slideService.GetMenuSlideDetails(id);
                 return View(slide);
             }
             catch
@@ -74,11 +74,11 @@ namespace MenuBoards.Web.Controllers
             }
         }
 
-        public ActionResult DeleteSlide(int id)
+        public ActionResult DeleteSlide(string id)
         {
             try
             {
-                var slide = this.slideService.GetSlideDetails(id);
+                var slide = this.slideService.DeleteSlide(id);
                 return View(slide);
             }
             catch
@@ -87,15 +87,13 @@ namespace MenuBoards.Web.Controllers
             }
         }
 
-        
         [HttpGet]
-        public JsonResult GetDefaultSubTemplateSettings()
+        public JsonResult SlideMenus(string slideId)
         {
-            var settings = this.subTemplateSettingService.GetDefaultSubTemplateSettings();
-            return Json(settings, JsonRequestBehavior.AllowGet);
+            var result = this.slideService.GetSlideMenus(slideId);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        
         [HttpPost]
         public JsonResult SaveMenu(Menu menu)
         {
@@ -141,12 +139,26 @@ namespace MenuBoards.Web.Controllers
             }
         }
 
-        [HttpPost]
-        public JsonResult SaveDesignSettings(SaveDesignSettings settings)
+        [HttpGet]
+        public JsonResult GetDisplaySettings(string slideId)
         {
             try
             {
-                var response = this.slideService.GetDesignSettings(settings);
+                var designs = this.slideService.GetDisplaySettings(slideId);
+                return Json(designs, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json("error", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult SaveDisplaySettings(DisplaySettings settings)
+        {
+            try
+            {
+                var response = this.slideService.SaveDisplaySettings(settings);
                 return Json(response, JsonRequestBehavior.AllowGet);
             }
             catch
@@ -156,16 +168,47 @@ namespace MenuBoards.Web.Controllers
         }
 
         [HttpPost]
-        public JsonResult SaveSubTemplateSettings(SaveDesignSettings settings)
+        public JsonResult SaveSingleColDesignSettings(SaveSingleColDesignSettings settings)
         {
             try
             {
-                var response = this.slideService.GetDesignSettings(settings);
-                return Json(response, JsonRequestBehavior.AllowGet);
+                settings.TemplateSettings = settings.TemplateSettingsValues;
+                var response = this.slideService.SaveDesignSettings(settings);
+                return Json(response, JsonRequestBehavior.DenyGet);
             }
             catch
             {
-                return Json("error", JsonRequestBehavior.AllowGet);
+                return Json("error", JsonRequestBehavior.DenyGet);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult SaveTwoColDesignSettings(SaveTwoColsDesignSettings settings)
+        {
+            try
+            {
+                settings.TemplateSettings = settings.TemplateSettingsValues;
+                var response = this.slideService.SaveDesignSettings(settings);
+                return Json(response, JsonRequestBehavior.DenyGet);
+            }
+            catch
+            {
+                return Json("error", JsonRequestBehavior.DenyGet);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult SaveThreeColDesignSettings(SaveThreeColsDesignSettings settings)
+        {
+            try
+            {
+                settings.TemplateSettings = settings.TemplateSettingsValues;
+                var response = this.slideService.SaveDesignSettings(settings);
+                return Json(response, JsonRequestBehavior.DenyGet);
+            }
+            catch
+            {
+                return Json("error", JsonRequestBehavior.DenyGet);
             }
         }
     }

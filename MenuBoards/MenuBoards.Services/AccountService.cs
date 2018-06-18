@@ -1,8 +1,7 @@
-﻿using MenuBoards.Interfaces;
-using MenuBoards.Interfaces.Web;
+﻿using MenuBoards.Interfaces.Web;
 using MenuBoards.Web.ViewModels;
 
-namespace MenuBoards.Web.ModelServices
+namespace MenuBoards.Services
 {
     public class AccountService: IAccountService
     {

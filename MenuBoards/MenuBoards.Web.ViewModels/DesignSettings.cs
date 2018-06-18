@@ -20,27 +20,29 @@ namespace MenuBoards.Web.ViewModels
 
         #region Select options
 
-        public IEnumerable<SelectListItem> TemplateTypeOptions { get; set; }
+        public List<MenuTemplateType> TemplateTypeOptions { get; set; }
 
         public IEnumerable<SelectListItem> CurrencyOptions { get; set; }
 
         public List<SubTemplateSelectionItem> SubTemplates { get; set; }
 
+        public List<ITemplateSetting> DefaultTemplateSettings { get; set; }
+
         #endregion
     }
 
-    public class SaveDesignSettings
+    public class SaveSingleColDesignSettings: DesignSettings
     {
-        public string Id { get; set; }
+        public SingleColumnSettings TemplateSettingsValues { get; set; }
+    }
 
-        public string Currency { get; set; }
-        
-        public string SlideId { get; set; }
+    public class SaveTwoColsDesignSettings : DesignSettings
+    {
+        public TwoColumnsSettings TemplateSettingsValues { get; set; }
+    }
 
-        public string TemplateType { get; set; }
-
-        public string SelectedSubTemplate { get; set; }
-
-        public string SubTemplateSettingsId { get; set; }
+    public class SaveThreeColsDesignSettings : DesignSettings
+    {
+        public ThreeColumnsSettings TemplateSettingsValues { get; set; }
     }
 }

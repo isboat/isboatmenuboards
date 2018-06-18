@@ -8,5 +8,10 @@ namespace MenuBoards.Web.ViewModels.SubTemplates
 {
     public interface ITemplateSetting
     {
+        string HtmlTemplateId { get; }
+
+        string Id { get; set; }
+
+        string DesignId { get; set; }
     }
 }

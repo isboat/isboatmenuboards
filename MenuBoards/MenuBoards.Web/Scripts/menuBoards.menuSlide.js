@@ -1,19 +1,21 @@
 ﻿window.mb.menuSlide = {
-
-    menus: [],
+    
+    Menus: [],
     
     createMenu: function (menuObj) {
 
-        var menu = menuObj || { id: window.newguid() }
+        var menu = menuObj || { Id: window.newguid(), SlideId: window.mb.slideId }
 
         return {
-            id: menu.id,
-            heading: menu.heading || "",
+            Id: menu.Id,
+            Heading: menu.MainMenuHeading || "",
+            SlideId: menu.SlideId,
 
-            menuItems: menu.menuItems || [],
+            MenuItems: menu.MenuItems || [],
             
             templates: {
                 addMenuItemModal: '#addmenuitemModal',
+                addImageModal: '#addImageModal',
                 deleteMenuColumnWarning: '#delMenuColWarnModal',
                 $menuItemDisplay: $('#menuItemDisplayTpl'),
                 settingsTpl: '#settingsTpl'
@@ -24,35 +26,45 @@
             },
 
             getMenuCol: function() {
-                return $("#" + this.id);
+                return $("#" + this.Id);
             },
 
             createMenuItem: function (menuItemObj) {
 
-                var item = menuItemObj || { id: window.newguid() }
+                var item = menuItemObj || { Id: window.newguid() }
 
                 return {
-                    id: item.id,
-                    label: item.label || "",
-                    price: item.price || "",
-                    sizetext: item.sizetext || "",
-                    subtext: item.subtext || ""
+                    Id: item.Id,
+                    Label: item.Label || "",
+                    Price: item.Price || "",
+                    SizeText: item.SizeText || "",
+                    SubText: item.SubText || ""
                 }
             },
 
             updateMenuHeading: function(val) {
-                this.heading = val;
+                this.Heading = val;
             },
 
             addMenuItem: function (menuItem) {
                 if (menuItem) {
-                    this.menuItems[menuItem.id] = menuItem;
+                    this.MenuItems[menuItem.Id] = menuItem;
                 }
 
                 this.displayMenuItem(menuItem);
 
                 // mark menu as unsaved
-                this.unsaved = true;
+                this.Unsaved = true;
+            },
+            
+            deleteMenuItem: function (menuItemId) {
+                
+                delete this.MenuItems[menuItemId];
+                var ele = "#" + menuItemId;
+                $(ele).remove();
+
+                // mark menu as unsaved
+                this.Unsaved = true;
             },
 
             displayMenuItem: function (menuItem) {
@@ -60,13 +72,91 @@
 
                 var item = $(menuSelf.templates.$menuItemDisplay.html());
 
-                item.find(".mi-label").html(menuItem.label);
-                item.find(".mi-size").html(menuItem.sizetext);
-                item.find(".mi-price").html(menuItem.price);
-                item.find(".mi-subtext").html(menuItem.subtext);
+                item.attr("id", menuItem.Id);
+                item.find(".mi-label").html(menuItem.Label);
+                item.find(".mi-size").html(menuItem.SizeText);
+                item.find(".mi-price").html(menuItem.Price);
+                item.find(".mi-subtext").html(menuItem.SubText);
 
-                this.getMenuCol().find(menuSelf.displayElements.listofmenuItems).append(item);
+                var displayList = this.getMenuCol().find(menuSelf.displayElements.listofmenuItems);
 
+                var alreadyDisplayed = displayList.find("#" + menuItem.Id);
+                if (alreadyDisplayed.length) {
+
+                    // Already display, so update
+                    alreadyDisplayed.html(item.html());
+
+                } else {
+                    displayList.append(item);
+                }
+
+                // Menuitem event binding
+                displayList.find(".delMenuItem").on("click", function() {
+                    menuSelf.deleteMenuItem($(this).parent().attr("id"));
+                });
+
+                displayList.find(".addImage").on("click", function () {
+                    var menuItemId = $(this).parent().attr("id");
+                    
+                        menuSelf.showAddImageModal(menuItemId);
+                });
+
+                displayList.find(".editMenuItem").on("click", function () {
+                    var menuItemId = $(this).parent().attr("id");
+                    var toDisplay = menuSelf.MenuItems[menuItemId];
+
+                    if (toDisplay) {
+                        menuSelf.showMenuItemModal(toDisplay);
+                    }
+                });
+            },
+
+            showAddImageModal: function (menuItemId) {
+
+                var self = this;
+
+                $(self.templates.addImageModal).modal({
+                    show: true,
+                    keyboard: true,
+                    focus: true
+                });
+                
+                $(self.templates.addImageModal).on('shown.bs.modal',
+                    function (e) {
+
+                        window.mb.httpWrapper.get({
+                            url: "/ImagePicker/LoadImages",
+                            success: function(htmlData) {
+
+                                if (htmlData) {
+
+                                    $(self.templates.addImageModal).find(".modal-body").html(htmlData);
+
+                                    //    $(self.templates.addImageModal).find(".addmenuitem").on('click',
+                                    //    function() {
+                                            
+                                    //        menuItem.SubText =
+                                    //            $(self.templates.addMenuItemModal).find(".menuitem-subtext").val();
+
+                                    //        self.addMenuItem(menuItem);
+
+                                    //        $(self.templates.addMenuItemModal).modal("hide");
+                                    //    });
+
+                                    //$(self.templates.addMenuItemModal).on('hide.bs.modal',
+                                    //    function(e) {
+                                    //        $(self.templates.addMenuItemModal).off();
+                                    //        $(self.templates.addMenuItemModal).find(".addmenuitem").off();
+                                    //    });
+                                }
+                            },
+                            error: function (error) {
+
+                                console.log(error);
+                                $(self.templates.addImageModal).find(".modal-body").html(error.responseText);
+                            }
+                        });
+                    });
             },
 
             showMenuItemModal: function (menuItem) {
@@ -79,19 +169,21 @@
                     focus: true
                 });
 
-                $(self.templates.addMenuItemModal).find(".menuitem-label").val(menuItem.label);
-                $(self.templates.addMenuItemModal).find(".menuitem-size").val(menuItem.sizetext);
-                $(self.templates.addMenuItemModal).find(".menuitem-price").val(menuItem.price);
-                $(self.templates.addMenuItemModal).find(".menuitem-subtext").val(menuItem.subtext);
+                $(self.templates.addMenuItemModal).find(".menuitem-id").val(menuItem.Id);
+                $(self.templates.addMenuItemModal).find(".menuitem-label").val(menuItem.Label);
+                $(self.templates.addMenuItemModal).find(".menuitem-size").val(menuItem.SizeText);
+                $(self.templates.addMenuItemModal).find(".menuitem-price").val(menuItem.Price);
+                $(self.templates.addMenuItemModal).find(".menuitem-subtext").val(menuItem.SubText);
                 
                 $(self.templates.addMenuItemModal).on('shown.bs.modal',
                     function(e) {
                         $(self.templates.addMenuItemModal).find(".addmenuitem").on('click', function () {
 
-                            menuItem.label = $(self.templates.addMenuItemModal).find(".menuitem-label").val();
-                            menuItem.sizetext = $(self.templates.addMenuItemModal).find(".menuitem-size").val();
-                            menuItem.price = $(self.templates.addMenuItemModal).find(".menuitem-price").val();
-                            menuItem.subtext = $(self.templates.addMenuItemModal).find(".menuitem-subtext").val();
+                            menuItem.Id = $(self.templates.addMenuItemModal).find(".menuitem-id").val();
+                            menuItem.Label = $(self.templates.addMenuItemModal).find(".menuitem-label").val();
+                            menuItem.SizeText = $(self.templates.addMenuItemModal).find(".menuitem-size").val();
+                            menuItem.Price = $(self.templates.addMenuItemModal).find(".menuitem-price").val();
+                            menuItem.SubText = $(self.templates.addMenuItemModal).find(".menuitem-subtext").val();
 
                             self.addMenuItem(menuItem);
 
@@ -108,7 +200,7 @@
 
             bindBtnEvts: function () {
                 var self = this;
-                var eleid = "#" + self.id;
+                var eleid = "#" + self.Id;
 
                 $(eleid + " .toaddmenuitembtn").on("click", function () {
 
@@ -134,7 +226,7 @@
 
             unBindBtnEvts: function () {
                 var self = this;
-                var eleid = "#" + self.id;
+                var eleid = "#" + self.Id;
 
                 $(eleid + " .toaddmenuitembtn").off();
 
@@ -156,7 +248,7 @@
                     function (e) {
                         $(self.templates.deleteMenuColumnWarning).find(".deletemenuCol").on('click', function () {
                             
-                            window.mb.menuSlide.deleteMenuCol(self.id);
+                            window.mb.menuSlide.deleteMenuCol(self.Id);
 
                             $(self.templates.deleteMenuColumnWarning).modal("hide");
                         });
@@ -169,25 +261,14 @@
                     });
             },
 
-            renderMenuForm: function () {
-                var menuTpl = $("#menuTpl").html();
-
-                var $menuTpl = $(menuTpl);
-                $menuTpl.find(".menu-heading").val(this.heading);
-
-                return $menuTpl;
-            },
-
             saveMenu: function () {
 
                 var menuModel = window.mb.helpers.convertToMenuModel(this);
-                console.log(menuModel);
 
                 window.mb.httpWrapper.post({
                     data: menuModel,
                     url: '/Slide/SaveMenu',
                     success: function (response) {
-                        console.log(response);
                     },
                     error: function () {}
                 });
@@ -201,27 +282,64 @@
 
                 var menuColTpl = $("#menuColTpl").html();
                 var $menuColTpl = $(menuColTpl);
-                $menuColTpl.attr("id", this.id);
+                $menuColTpl.attr("id", this.Id);
 
                 $menuColTpl.find('.panel-body').append(this.renderMenuForm());
                 $(".menusSection .row").append($menuColTpl);
 
+                if (this.MenuItems) {
+                    for (var i = 0; i < this.MenuItems.length; i++) {
+                        this.displayMenuItem(this.MenuItems[i]);
+                    }
+                }
 
                 // Bind DOM events
                 this.bindBtnEvts();
 
                 return $menuColTpl;
-            }
+            },
+
+            renderMenuForm: function () {
+                var menuTpl = $("#menuTpl").html();
+
+                var $menuTpl = $(menuTpl);
+                $menuTpl.find(".menu-heading").val(this.Heading);
+
+                return $menuTpl;
+            },
         }
     },
 
-    addMenuCol: function () {
+    addNewMenuCol: function () {
         var menu = this.createMenu();
         menu.isNew = true;
 
-        this.menus.push(menu);
+        this.Menus.push(menu);
         
         $(".menusSection .row").append(menu.renderMenuCol());
+    },
+
+    LoadSlideMenus: function () {
+        
+        var self = this;
+        window.mb.httpWrapper.get({
+            url: '/Slide/SlideMenus?slideId=' + window.mb.slideId,
+            success: function (response) {
+
+                if (response) {
+
+                    for (var i = 0; i < response.length; i++) {
+
+                        var menu = self.createMenu(response[i]);
+                        self.Menus.push(menu);
+
+                        $(".menusSection .row").append(menu.renderMenuCol());
+                    }
+                }
+
+            },
+            error: function () { }
+        });
     },
 
     deleteMenuCol: function(menuId) {
@@ -231,15 +349,15 @@
         var index = -1;
 
         var delFunc = function() {
-            self.menus.splice(index, 1);
+            self.Menus.splice(index, 1);
 
-            var ele = "div#" + menuToDelete.id;
+            var ele = "div#" + menuToDelete.Id;
             $(ele).remove();
         };
 
-        for (var i = 0; i < this.menus.length; i++) {
-            if (this.menus[i].id === menuId) {
-                menuToDelete = this.menus[i];
+        for (var i = 0; i < this.Menus.length; i++) {
+            if (this.Menus[i].Id === menuId) {
+                menuToDelete = this.Menus[i];
                 index = i;
                 break;
             }
@@ -253,7 +371,7 @@
             } else {
 
                 window.mb.httpWrapper.delete({
-                    data: menuToDelete.id,
+                    data: menuToDelete.Id,
                     url: '/Slide/DeleteMenu',
                     success: function (response) {
                         delFunc();
@@ -263,12 +381,21 @@
             }
         }
     }
+
+    /*Design Settings*/
 }
 
 $("#addMenuCol").on("click", function () {
-    window.mb.menuSlide.addMenuCol();
+    window.mb.menuSlide.addNewMenuCol();
 });
 
 $("#showsettingsbtn").on("click", function () {
-    window.mb.designSettings.showSettings();
+    window.mb.designSettings.showSettings(window.mb.slideId);
 });
+
+$("#showdisplaysettingsbtn").on("click", function () {
+    window.mb.displaySettings.showSettings(window.mb.slideId);
+});
+
+// Initial menu load
+window.mb.menuSlide.LoadSlideMenus();

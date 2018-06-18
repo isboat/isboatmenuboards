@@ -9,6 +9,7 @@
     $selectCurrency: "#selectCurrency",
     $saveDesignSettings: ".saveDesignSettings",
 
+    id: null,
     subTemplates: null,
     templateTypes: null,
 
@@ -18,45 +19,50 @@
     currency: null,
     currencies: null,
 
-    loadDesignSettings: function () {
+    loadDesignSettings: function (slideId, callbackFun) {
         var self = this;
         window.mb.httpWrapper.get({
-            url: '/Slide/GetDesignSettings',
+            url: '/Slide/GetDesignSettings/?slideId=' + slideId ,
             success: function (response) {
 
-                if (response && response !== "error") {
+                // Register all sub templates
+                window.mb.templateManager.registerTemplate("SingleColumn", "SingleColumnTmpl");
+                window.mb.templateManager.registerTemplate("TwoColumn", "TwoColumnTmpl");
+                window.mb.templateManager.registerTemplate("ThreeColumn", "ThreeColumnTmpl");
+
+                if (response !== "error") {
+
+                    self.Id = response.Id;
                     self.templateTypes = response.TemplateTypeOptions;
+                    self.templateType = response.TemplateType || response.TemplateTypeOptions[0].Id;
+
                     self.subTemplates = response.SubTemplates;
-                    self.templateType = response.TemplateType;
-                    self.selectedSubTemplate = response.SelectedSubTemplate;
+                    self.subTemplate = response.SubTemplate || response.SubTemplates[0].Id;
+
                     self.currency = response.Currency;
                     self.currencies = response.CurrencyOptions;
 
                     // Set template settings
-                    window.mb.templateManager.settings = response.SubTemplateSettings;
+                    window.mb.templateManager.settings = response.TemplateSettings || response.DefaultTemplateSettings[0];
+                    window.mb.templateManager.listOfDefaultSettings = response.DefaultTemplateSettings;
+
+                    if (callbackFun) {
+                        callbackFun();
+                    }
                 }
             },
             error: function () { }
         });
-
-        // Also load default sub template settings
-        window.mb.templateManager.loadDefaultSubTemplateSettings();
-
-        // Register all sub templates
-        window.mb.templateManager.registerTemplate("SingleColumnBasic", "SingleColumnBasicTmpl");
-        window.mb.templateManager.registerTemplate("SingleColumnBronze", "SingleColumnBronzeTmpl");
-        window.mb.templateManager.registerTemplate("SingleColumnSilver", "SingleColumnSilverTmpl");
     },
 
     initialiseSelectOptions: function () {
         var self = this;
 
-        self.clearSelectElement(self.$selectTemplateType);
 
         //Render main templates
+        self.clearSelectElement(self.$selectTemplateType);
         for (var i = 0; i < self.templateTypes.length; i++) {
             var type = self.templateTypes[i];
-            type.Selected = type.Value === self.templateType;
             self.appendTemplateTypeToSelectElement(type);
         }
 
@@ -73,7 +79,7 @@
         self.renderCurrencies();
 
         // Render template settings
-        window.mb.templateManager.showDefaultTemplate();
+        window.mb.templateManager.showTemplateSettings();
     },
 
     clearSelectElement: function (eleId) {
@@ -102,11 +108,11 @@
     appendTemplateTypeToSelectElement: function (template) {
         var self = this;
 
-        var option = '<option value="' + template.Value + '"';
+        var option = '<option value="' + template.Id + '"';
         if (template.Selected) {
             option += ' selected ';
         }
-        option += ('>' + template.Text + '</option>');
+        option += ('>' + template.Name + '</option>');
 
         var select = $(self.$selectTemplateType);
         select.append(option);
@@ -141,40 +147,36 @@
         }
     },
 
-    showSettings: function () {
+    showSettings: function (slideId) {
         var self = this;
+        self.loadDesignSettings(slideId, function () {
 
-        $(self.templates.mainSettings).modal({
-            show: true,
-            keyboard: true,
-            focus: true
-        });
+            $(self.templates.mainSettings).modal({
+                show: true,
+                keyboard: true,
+                focus: true
+            });
 
-        self.initialiseSelectOptions();
+            self.initialiseSelectOptions();
 
-        $(self.templates.mainSettings).on('shown.bs.modal',
+
+            $(self.templates.mainSettings).on('shown.bs.modal',
             function (e) {
                 $(self.templates.mainSettings).find(self.$selectTemplateType).on('change', function () {
 
-                    self.displayChildSubDesignTemplates($(this).val());
-                });
+                    var val = $(this).val();
+                    self.displayChildSubDesignTemplates(val);
 
-                $(self.$selectSubTemplateDesign).on('change', function () {
-                    var subTemplateId = $(this).val();
-                    var foundSubTemplate = null;
-
-                    if (subTemplateId) {
-                        for (var i = 0; i < self.subTemplates.length; i++) {
-                            if (self.subTemplates[i].Id == subTemplateId) {
-                                foundSubTemplate = self.subTemplates[i];
-                                break;
-                            }
+                    var selectedTemp = null;
+                    for (var i = 0; i < self.templateTypes.length; i++) {
+                        if (self.templateTypes[i].Id == val) {
+                            selectedTemp = self.templateTypes[i];
+                            break;
                         }
+                    }
 
-                        if (foundSubTemplate && foundSubTemplate.HtmlTemplateId) {
-                            window.mb.templateManager.showSelectedTemplate(foundSubTemplate
-                                .HtmlTemplateId);
-                        }
+                    if (selectedTemp) {
+                        window.mb.templateManager.showSelectedTemplate(selectedTemp.HtmlTemplateId);
                     }
                 });
 
@@ -183,13 +185,15 @@
                 });
             });
 
-        $(self.templates.mainSettings).on('hide.bs.modal',
-            function (e) {
-                $(self.templates.mainSettings).off();
-                $(self.templates.mainSettings).find(self.$selectTemplateType).off();
-                $(self.templates.mainSettings).find(self.$selectSubTemplateDesign).off();
-                $(self.templates.mainSettings).find(self.$saveDesignSettings).off();
-            });
+            $(self.templates.mainSettings).on('hide.bs.modal',
+                function (e) {
+                    $(self.templates.mainSettings).off();
+                    $(self.templates.mainSettings).find(self.$selectTemplateType).off();
+                    $(self.templates.mainSettings).find(self.$selectSubTemplateDesign).off();
+                    $(self.templates.mainSettings).find(self.$saveDesignSettings).off();
+                });
+        });
+        
     },
 
     saveDesignSettings: function() {
@@ -198,33 +202,45 @@
         window.mb.templateManager.updateSettings();
         self.currency = $(self.$selectCurrency).val();
         self.templateType = $(self.$selectTemplateType).val();
-        self.selectedSubTemplate = $(self.$selectSubTemplateDesign).val();
+        self.subTemplate = $(self.$selectSubTemplateDesign).val();
 
-        window.mb.httpWrapper.post({
-            url: '/Slide/saveDesignSettings',
-            data: {
-                currency: self.currency,
-                templateType: self.templateType,
-                selectedSubTemplate: self.selectedSubTemplate,
-                subTemplateSettings: window.mb.templateManager.settings
-            },
-            success: function (response) {
+        var url = '/Slide/';
+        var isUrlValid = true;
 
+        switch (self.templateType) {
+            case "1":
+                url += "SaveSingleColDesignSettings";
+                break;
+            case "2":
+                url += "SaveTwoColDesignSettings";
+                break;
+            case "3":
+                url += "SaveThreeColDesignSettings";
+                break;
+            default:
+                isUrlValid = false;
+                break;
+        }
 
-                window.mb.httpWrapper.post({
-                    url: '/Slide/saveSubTemplateSettings',
-                    data: {
-                        settings: window.mb.templateManager.settings
-                    },
-                    success: function (response) {
+        if (isUrlValid) {
 
-                    },
-                    error: function () { }
-                });
-
-
-            },
-            error: function () { }
-        });
+            window.mb.httpWrapper.post({
+                url: url,
+                data: {
+                    Id: self.Id || window.newguid(),
+                    SlideId: window.mb.slideId,
+                    Currency: self.currency,
+                    TemplateType: self.templateType,
+                    SubTemplate: self.subTemplate,
+                    TemplateSettingsValues: window.mb.templateManager.settings
+                },
+                success: function(response) {
+                    if (response && response.Success) {
+                        $(self.templates.mainSettings).modal("hide");
+                    }
+                },
+                error: function() {}
+            });
+        }
     }
 }

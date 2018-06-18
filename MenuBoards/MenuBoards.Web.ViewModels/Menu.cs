@@ -6,6 +6,8 @@ namespace MenuBoards.Web.ViewModels
     {
         public string Id { get; set; }
 
+        public string SlideId { get; set; }
+
         public string MainMenuHeading { get; set; }
 
         public List<MenuItem> MenuItems { get; set; }

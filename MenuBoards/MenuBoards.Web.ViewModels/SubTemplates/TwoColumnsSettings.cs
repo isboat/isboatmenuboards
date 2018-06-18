@@ -8,8 +8,16 @@ namespace MenuBoards.Web.ViewModels.SubTemplates
 {
     public class TwoColumnsSettings : ITemplateSetting
     {
+        public TwoColumnsSettings()
+        {
+            this.BackgroundColor = "black";
+            this.HeadingTextSize = "100px";
+        }
         public string Id { get; set; }
-        public string HtmlTemplateId => "";
+
+        public string DesignId { get; set; }
+
+        public string HtmlTemplateId => "TwoColumn";
 
         public string SubTemplateId { get; set; }
 

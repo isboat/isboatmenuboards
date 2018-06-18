@@ -1,0 +1,13 @@
+﻿@model IEnumerable<MenuBoards.Web.ViewModels.Images.ImageFileViewModel>
+@{
+    Layout = null;
+}
+
+<div>
+    @foreach (var item in Model)
+    {
+        <div>
+            <img src="/Images/@item.Name" width="200" height="150" />
+        </div>
+    }
+</div>

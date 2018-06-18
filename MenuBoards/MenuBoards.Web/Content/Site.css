@@ -22,3 +22,84 @@ select,
 textarea {
     max-width: 280px;
 }
+.home-carousel-container {
+    background-color: #003d99;
+    position: relative;
+    z-index: 1000;
+    min-height: 200px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+}
+
+.freequote-container {
+    width: 100px;
+    z-index: 1100;
+    background-color: #000000;
+    position: absolute;
+    top: 10%;
+    left: 65%;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.freequote-container .get {
+    color: #8b0000;
+    font-size: 12px;
+}
+.freequote-container .fquote {
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.sc-basic h1 {
+    background-color: green;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: #000000;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+}
+.sc-basic h4 {
+    border-bottom: 1px dashed #eee;
+    padding-bottom: 5px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.sc-basic .menuitem {
+    margin-bottom: 30px;
+}
+.sc-basic h4 .price{
+    float: right;
+}
+
+
+/**Single col - Bronze */
+.sc-bronze h1 {
+    background-color: green;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: #000000;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+}
+.sc-bronze .menuitem h4 {
+    padding-bottom: 5px;
+    font-weight: 500;
+    font-size: xx-large;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.sc-bronze .menuitem .menuitem-subtext {
+    padding-bottom: 5px;
+    border-bottom: 1px dashed #eee;
+}
+.sc-bronze .menuitem {
+    padding-bottom: 5px;
+    border-bottom: 2px dashed #eee;
+    margin-bottom: 30px;
+}

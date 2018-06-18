@@ -1,25 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using MenuBoards.Web.ViewModels;
 
-namespace MenuBoards.Web.ModelServices
+namespace MenuBoards.Services
 {
     public class UiHelper
     {
-        public static IEnumerable<SelectListItem> GetTemplateTypeOptions(List<MenuTemplateType> templateList , string defaultTemplateType)
-        {
-            var templates = templateList.Select(menuTemplate => new SelectListItem
-                {
-                    Text = menuTemplate.Name,
-                    Value = menuTemplate.Id,
-                    Selected = defaultTemplateType == menuTemplate.Id
-                })
-                .ToList();
-            
-            return new SelectList(templates, "Value", "Text");
-        }
         public static IEnumerable<SelectListItem> GetCurrencyOptions(string selectedCur)
         {
             var templates = new List<SelectListItem>

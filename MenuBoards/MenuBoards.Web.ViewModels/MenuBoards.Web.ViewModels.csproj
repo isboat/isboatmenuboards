@@ -65,6 +65,9 @@
     <Compile Include="BaseItem.cs" />
     <Compile Include="BaseResponse.cs" />
     <Compile Include="DesignSettings.cs" />
+    <Compile Include="DisplaySettings.cs" />
+    <Compile Include="Displays\MenuSlideDisplay.cs" />
+    <Compile Include="Images\ImageFileViewModel.cs" />
     <Compile Include="MenuItem.cs" />
     <Compile Include="MenuSlide.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -75,8 +78,6 @@
     <Compile Include="MenuTemplateType.cs" />
     <Compile Include="SlideType.cs" />
     <Compile Include="SubTemplateSelectionItem.cs" />
-    <Compile Include="SubTemplates\SingleColumnBasicSettings.cs" />
-    <Compile Include="SubTemplates\SingleColumnBronzeSettings.cs" />
     <Compile Include="SubTemplates\ITemplateSettings.cs" />
     <Compile Include="SubTemplates\SingleColumnSettings.cs" />
     <Compile Include="SubTemplates\ThreeColumnsSettings.cs" />

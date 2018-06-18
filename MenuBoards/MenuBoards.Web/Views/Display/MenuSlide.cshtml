@@ -1,0 +1,47 @@
+﻿@using MenuBoards.Web.ViewModels
+@model MenuBoards.Web.ViewModels.Displays.MenuSlideDisplay
+
+@{
+    Layout = "~/Views/Display/_MenuSlideLayout.cshtml";
+}
+
+@if (Model == null)
+{
+    <span>Model is Null</span>
+}
+else
+{
+    if (!Model.IsLive)
+    {
+        <div>Not Live yet</div>
+    }
+    else
+    {
+        <div>
+            @if (Model.MenuSlide.Menus.Any())
+            {
+                if (Model.DesignSettings.TemplateType == TemplateType.GetSingleColumn().Id)
+                {
+                    <div>@{ Html.RenderPartial(string.Format("SingleColumn/{0}", Model.DesignSettings.SubTemplate), Model); }</div>
+                }
+            }
+        </div>
+    }
+}
+
+
+
+<script type="text/javascript">
+    $("document").ready(function() {
+        setInterval(function() {
+            window.mb.httpWrapper.get({
+                url: '/Display/HasNewData?slideId=' + '@Model.DesignSettings.SlideId' + '&dt=' + '@Model.DateTimeStamp',
+                success: function(response) {
+                    if (response === true) {
+                        window.location.reload(true);
+                    }
+                }
+            });
+        }, 60000);  // Every 1 minute
+    })
+</script>
