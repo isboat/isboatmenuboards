@@ -1,0 +1,32 @@
+﻿@model MenuBoards.Web.ViewModels.Images.AddImage
+
+<div>Select Image to Menu item</div>
+
+@using (Html.BeginForm())
+{
+
+    @Html.Action("LoadImages", "ImagePicker")
+
+    @Html.HiddenFor(model => model.ItemId)
+    @Html.HiddenFor(model => model.SlideId)
+    @Html.HiddenFor(model => model.ReturnUrl)
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Add" class="add btn btn-default" />
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.add').on('click', function (evt) {
+                var val = $('.selectedImage').val();
+                if (!val) {
+                    return false;
+                }
+
+            })
+        })
+    </script>
+
+}

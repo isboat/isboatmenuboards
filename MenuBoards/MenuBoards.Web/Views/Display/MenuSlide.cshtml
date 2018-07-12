@@ -20,28 +20,36 @@ else
         <div>
             @if (Model.MenuSlide.Menus.Any())
             {
-                if (Model.DesignSettings.TemplateType == TemplateType.GetSingleColumn().Id)
+                if (Model.DesignSettings.TemplateType == TemplateTypes.GetSingleColumn().Id)
                 {
-                    <div>@{ Html.RenderPartial(string.Format("SingleColumn/{0}", Model.DesignSettings.SubTemplate), Model); }</div>
+                    <div>@{ Html.RenderPartial($"SingleColumn/{Model.DesignSettings.SubTemplate}", Model); }</div>
                 }
+                else
+                {
+                    <div>No template selected</div>
+                }
+            }
+            else
+            {
+                <div>No menu items</div>
             }
         </div>
     }
-}
 
-
-
-<script type="text/javascript">
+    <script type="text/javascript">
     $("document").ready(function() {
         setInterval(function() {
-            window.mb.httpWrapper.get({
-                url: '/Display/HasNewData?slideId=' + '@Model.DesignSettings.SlideId' + '&dt=' + '@Model.DateTimeStamp',
+            $.ajax({
+                type: 'GET',
+                url: '/Display/Ping?slideId=' + '@Model.MenuSlide.Id' + '&dt=' + '@Model.DateTimeStamp',
                 success: function(response) {
                     if (response === true) {
                         window.location.reload(true);
                     }
                 }
             });
-        }, 60000);  // Every 1 minute
+        }, 10000);  // Every 1 minute
     })
-</script>
+    </script>
+}
+

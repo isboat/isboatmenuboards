@@ -1,5 +1,4 @@
 ﻿@using MenuBoards.Web.ViewModels
-@using MenuBoards.Web.ViewModels.SubTemplates
 @model MenuBoards.Web.ViewModels.Displays.MenuSlideDisplay
 
 <div class="sc-bronze">
@@ -14,8 +13,8 @@
             <div class="menuitem">
                 <div class="row">
                     <div class="col-sm-4">
-                        @*<img width="200" height="100" style="background-color: gray" />*@
-                        <img width="200" height="100" src="~/Images/salad.PNG" />
+                        @*<img width="200" height="100" />*@
+                        <img width="200" style="background-color: gray" src="@item.ImageUrl" />
                     </div>
                     <div class="col-sm-8">
                         <h4>
@@ -38,43 +37,43 @@
 </div>
 
 <script type="text/javascript">
-    @if (!string.IsNullOrEmpty(((SingleColumnSettings)Model.DesignSettings.TemplateSettings).BackgroundColor))
+    @if (!string.IsNullOrEmpty(Model.DesignSettings.BackgroundColor))
     {
-        @:$("body").css("background-color", '@(((SingleColumnSettings) Model.DesignSettings.TemplateSettings).BackgroundColor)')
+        @:$("body").css("background-color", '@(Model.DesignSettings.BackgroundColor)')
     }
 
-    @if (!string.IsNullOrEmpty(((SingleColumnSettings)Model.DesignSettings.TemplateSettings).BackgroundColor))
+    @if (!string.IsNullOrEmpty(Model.DesignSettings.BackgroundColor))
     {
-        @:$("body").css("background-img", '@(((SingleColumnSettings) Model.DesignSettings.TemplateSettings).BackgroundImg)')
+        @:$("body").css("background-img", '@(Model.DesignSettings.BackgroundImg)')
     }    
 
-    @if (!string.IsNullOrEmpty(((SingleColumnSettings)Model.DesignSettings.TemplateSettings).HeadingBkgdColor))
+    @if (!string.IsNullOrEmpty(Model.DesignSettings.HeadingBkgdColor))
     {
-        @:$("h1.menu-heading").css("background-color", '@(((SingleColumnSettings) Model.DesignSettings.TemplateSettings).HeadingBkgdColor)')
+        @:$("h1.menu-heading").css("background-color", '@(Model.DesignSettings.HeadingBkgdColor)')
     }
 
-    @if (!string.IsNullOrEmpty(((SingleColumnSettings)Model.DesignSettings.TemplateSettings).HeadingBkgdColor))
+    @if (!string.IsNullOrEmpty(Model.DesignSettings.HeadingColor))
     {
-        @:$("h1.menu-heading").css("color", '@(((SingleColumnSettings) Model.DesignSettings.TemplateSettings).HeadingColor)')
+        @:$("h1.menu-heading").css("color", '@(Model.DesignSettings.HeadingColor)')
     }
 
-    @if (!string.IsNullOrEmpty(((SingleColumnSettings)Model.DesignSettings.TemplateSettings).MenuItemColor))
+    @if (!string.IsNullOrEmpty(Model.DesignSettings.MenuItemColor))
     {
-        @:$(".menuitem").css("color", '@(((SingleColumnSettings) Model.DesignSettings.TemplateSettings).MenuItemColor)')
+        @:$(".menuitem").css("color", '@(Model.DesignSettings.MenuItemColor)')
     }
 
-    @if (!string.IsNullOrEmpty(((SingleColumnSettings)Model.DesignSettings.TemplateSettings).MenuItemTextSize))
+    @if (!string.IsNullOrEmpty(Model.DesignSettings.MenuItemTextSize))
     {
-        @:$(".menuitem .menuitem-label").css("font-size", '@(((SingleColumnSettings) Model.DesignSettings.TemplateSettings).MenuItemTextSize)px')
+        @:$(".menuitem .menuitem-label").css("font-size", '@(Model.DesignSettings.MenuItemTextSize)px')
     }
 
-    @if (!string.IsNullOrEmpty(((SingleColumnSettings)Model.DesignSettings.TemplateSettings).MenuItemPriceTextSize))
+    @if (!string.IsNullOrEmpty(Model.DesignSettings.MenuItemPriceTextSize))
     {
-        @:$(".menuitem .price").css("font-size", '@(((SingleColumnSettings) Model.DesignSettings.TemplateSettings).MenuItemPriceTextSize)px')
+        @:$(".menuitem .price").css("font-size", '@(Model.DesignSettings.MenuItemPriceTextSize)px')
     }
 
-    @if (!string.IsNullOrEmpty(((SingleColumnSettings)Model.DesignSettings.TemplateSettings).MenuItemSubTextSize))
+    @if (!string.IsNullOrEmpty(Model.DesignSettings.MenuItemSubTextSize))
     {
-        @:$(".menuitem .menuitem-subtext").css("font-size", '@(((SingleColumnSettings) Model.DesignSettings.TemplateSettings).MenuItemSubTextSize)px')
+        @:$(".menuitem .menuitem-subtext").css("font-size", '@(Model.DesignSettings.MenuItemSubTextSize)px')
     }
 </script>

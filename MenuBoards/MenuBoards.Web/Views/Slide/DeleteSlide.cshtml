@@ -1,8 +1,11 @@
 ﻿@model MenuBoards.Web.ViewModels.BaseResponse
 
+<p>
+    @Html.ActionLink("View all slides", "ViewAllSlides", "Slide")
+</p>
 @if (Model.Success)
 {
-    <div class="alert alert-success">
+    <div class="alert alert-danger">
         <strong>Success!</strong> slide deleted.
     </div>
 }

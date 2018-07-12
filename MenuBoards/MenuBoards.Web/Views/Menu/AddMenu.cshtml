@@ -1,0 +1,42 @@
+﻿@using MenuBoards.Web.ViewModels
+@model MenuBoards.Web.ViewModels.Menu
+
+@{ var crumbs = new List<BreadcrumbItemViewModel>
+{
+new BreadcrumbItemViewModel
+{
+   Label = "Back to Slide",
+   Url = Url.Action("SlideDetails", "Slide", new { id = Model.SlideId})
+}
+};
+}
+
+@{
+    Html.RenderPartial("Breadcrumb", crumbs);
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Menu</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.SlideId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MainMenuHeading, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MainMenuHeading, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MainMenuHeading, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Add" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}

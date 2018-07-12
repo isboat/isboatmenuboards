@@ -40,9 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TimeStampRepository.cs" />
+    <Compile Include="MenuItemRepository.cs" />
+    <Compile Include="MenuRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingsRepository.cs" />
-    <Compile Include="MenuSlideRepository.cs" />
+    <Compile Include="SlideRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MenuBoards.Interfaces\MenuBoards.Interfaces.csproj">

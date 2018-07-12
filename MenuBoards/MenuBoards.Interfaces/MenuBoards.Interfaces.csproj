@@ -40,14 +40,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataAccess\IBaseSlideRepository.cs" />
+    <Compile Include="DataAccess\IMenuItemRepository.cs" />
+    <Compile Include="DataAccess\IMenuRepository.cs" />
     <Compile Include="DataAccess\ISettingsRepository.cs" />
-    <Compile Include="DataAccess\IMenuSlideRepository.cs" />
+    <Compile Include="DataAccess\ISlideRepository.cs" />
+    <Compile Include="DataAccess\ITimeStampRepository.cs" />
     <Compile Include="Web\IAccountService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Web\IDisplaySettingsService.cs" />
+    <Compile Include="Web\IDesignSettingsService.cs" />
     <Compile Include="Web\IDisplayService.cs" />
+    <Compile Include="Web\IMenuItemService.cs" />
+    <Compile Include="Web\IMenuService.cs" />
     <Compile Include="Web\ISlideService.cs" />
-    <Compile Include="Web\ITemplateSettingService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MenuBoards.Web.ViewModels\MenuBoards.Web.ViewModels.csproj">

@@ -33,77 +33,32 @@ namespace MenuBoards.Web.Controllers
 
             return this.PartialView(images);
         }
-
-        // GET: ImagePicker/Details/5
-        public ActionResult Details(int id)
+        
+        [HttpGet]
+        public JsonResult GetImages(string folder)
         {
-            return View();
-        }
-
-        // GET: ImagePicker/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: ImagePicker/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
+            var images = new List<ImageFileViewModel>();
+            string curDir = ControllerContext.HttpContext.Server.MapPath("~/Images");
+            if (!string.IsNullOrEmpty(folder))
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                curDir += "/" + folder;
             }
-            catch
+
+            var directoryInfo = new DirectoryInfo(curDir);
+
+            if (directoryInfo.Exists)
             {
-                return View();
+                foreach (var fileInfo in directoryInfo.EnumerateFiles())
+                {
+                    images.Add(new ImageFileViewModel
+                    {
+                        Name = fileInfo.Name,
+                        Path = fileInfo.FullName
+                    });
+                }
             }
-        }
 
-        // GET: ImagePicker/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: ImagePicker/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: ImagePicker/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: ImagePicker/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return Json(images, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace MenuBoards.Web.ViewModels
 {
@@ -8,6 +9,7 @@ namespace MenuBoards.Web.ViewModels
 
         public string SlideId { get; set; }
 
+        [DisplayName("Menu Heading")]
         public string MainMenuHeading { get; set; }
 
         public List<MenuItem> MenuItems { get; set; }

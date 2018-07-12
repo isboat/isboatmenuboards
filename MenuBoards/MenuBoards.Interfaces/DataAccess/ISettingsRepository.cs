@@ -1,18 +1,27 @@
 ﻿using MenuBoards.Web.ViewModels;
-using MenuBoards.Web.ViewModels.SubTemplates;
+using MenuBoards.Web.ViewModels.Displays;
 
 namespace MenuBoards.Interfaces.DataAccess
 {
     public interface ISettingsRepository
     {
-        SingleColumnSettings GetSingleColumnSettings(string settingsId);
+        #region Design Settings
 
-        DesignSettings GetDesignSettings(string slideId);
+        
+        SlideDesignSettings GetDesignSettings(string slideId);
 
-        BaseResponse SaveDesignSettings(DesignSettings settings);
+        BaseResponse SaveDesignSettings(SlideDesignSettings settings);
+
+        #endregion
+
+        #region Display Settings
 
         DisplaySettings GetDisplaySettings(string slideId);
 
         BaseResponse SaveDisplaySettings(DisplaySettings settings);
+
+        #endregion
+
+        DisplayCodeResponse VerifyDisplayCode(DisplayCode code);
     }
 }

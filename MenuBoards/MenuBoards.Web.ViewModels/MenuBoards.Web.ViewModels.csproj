@@ -64,9 +64,13 @@
   <ItemGroup>
     <Compile Include="BaseItem.cs" />
     <Compile Include="BaseResponse.cs" />
-    <Compile Include="DesignSettings.cs" />
+    <Compile Include="BreadcrumbItemViewModel.cs" />
+    <Compile Include="DeleteItem.cs" />
     <Compile Include="DisplaySettings.cs" />
+    <Compile Include="Displays\DisplayCode.cs" />
+    <Compile Include="Displays\DisplayCodeResponse.cs" />
     <Compile Include="Displays\MenuSlideDisplay.cs" />
+    <Compile Include="Images\AddImage.cs" />
     <Compile Include="Images\ImageFileViewModel.cs" />
     <Compile Include="MenuItem.cs" />
     <Compile Include="MenuSlide.cs" />
@@ -74,14 +78,11 @@
     <Compile Include="RegisterViewModel.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Slide.cs" />
+    <Compile Include="SlideDesignSettings.cs" />
     <Compile Include="SlideSettings.cs" />
     <Compile Include="MenuTemplateType.cs" />
     <Compile Include="SlideType.cs" />
     <Compile Include="SubTemplateSelectionItem.cs" />
-    <Compile Include="SubTemplates\ITemplateSettings.cs" />
-    <Compile Include="SubTemplates\SingleColumnSettings.cs" />
-    <Compile Include="SubTemplates\ThreeColumnsSettings.cs" />
-    <Compile Include="SubTemplates\TwoColumnsSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

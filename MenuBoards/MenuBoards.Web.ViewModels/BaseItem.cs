@@ -10,7 +10,7 @@ namespace MenuBoards.Web.ViewModels
 
         #region Base Settings
 
-        public DateTime GoLiveDateTime { get; set; }
+        public string GoLiveDateTime { get; set; }
 
         #endregion
     }

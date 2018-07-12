@@ -5,6 +5,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using MenuBoards.Core;
 using MenuBoards.Interfaces.Web;
 using MenuBoards.Services;
 using MenuBoards.Web.ViewModels;
@@ -13,9 +14,8 @@ namespace MenuBoards.Web.Controllers
 {
     public class SlideController : Controller
     {
-        private readonly ISlideService slideService = IoC.Instance;
-
-        private readonly ITemplateSettingService subTemplateSettingService = new TemplateSettingService();
+        private readonly ISlideService slideService = IoC.Container.Resolve<ISlideService>();
+        private readonly IMenuService menuService = IoC.Container.Resolve<IMenuService>();
         
         // GET: Slide/Create
         public ActionResult CreateMenuSlide()
@@ -65,7 +65,7 @@ namespace MenuBoards.Web.Controllers
         {
             try
             {
-                var slide = this.slideService.GetMenuSlideDetails(id);
+                var slide = this.slideService.GetSlideDetails(id);
                 return View(slide);
             }
             catch
@@ -90,7 +90,7 @@ namespace MenuBoards.Web.Controllers
         [HttpGet]
         public JsonResult SlideMenus(string slideId)
         {
-            var result = this.slideService.GetSlideMenus(slideId);
+            var result = this.menuService.GetMenus(slideId);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -99,7 +99,7 @@ namespace MenuBoards.Web.Controllers
         {
             if (!string.IsNullOrEmpty(menu?.Id))
             {
-                var result = this.slideService.SaveMenu(menu);
+                var result = this.menuService.SaveMenu(menu);
                 return Json(result, JsonRequestBehavior.DenyGet);
             }
 
@@ -113,7 +113,7 @@ namespace MenuBoards.Web.Controllers
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    var result = this.slideService.DeleteMenu(id);
+                    var result = this.menuService.DeleteMenu(id);
                     return Json(result, JsonRequestBehavior.AllowGet);
                 }
 
@@ -122,20 +122,6 @@ namespace MenuBoards.Web.Controllers
             catch
             {
                 return Json(new BaseResponse { Message = "Error occured" }, JsonRequestBehavior.AllowGet);
-            }
-        }
-
-        [HttpGet]
-        public JsonResult GetDesignSettings(string slideId)
-        {
-            try
-            {
-                var designs = this.slideService.GetDesignSettings(slideId);
-                return Json(designs, JsonRequestBehavior.AllowGet);
-            }
-            catch
-            {
-                return Json("error", JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -150,65 +136,6 @@ namespace MenuBoards.Web.Controllers
             catch
             {
                 return Json("error", JsonRequestBehavior.AllowGet);
-            }
-        }
-
-        [HttpPost]
-        public JsonResult SaveDisplaySettings(DisplaySettings settings)
-        {
-            try
-            {
-                var response = this.slideService.SaveDisplaySettings(settings);
-                return Json(response, JsonRequestBehavior.AllowGet);
-            }
-            catch
-            {
-                return Json("error", JsonRequestBehavior.AllowGet);
-            }
-        }
-
-        [HttpPost]
-        public JsonResult SaveSingleColDesignSettings(SaveSingleColDesignSettings settings)
-        {
-            try
-            {
-                settings.TemplateSettings = settings.TemplateSettingsValues;
-                var response = this.slideService.SaveDesignSettings(settings);
-                return Json(response, JsonRequestBehavior.DenyGet);
-            }
-            catch
-            {
-                return Json("error", JsonRequestBehavior.DenyGet);
-            }
-        }
-
-        [HttpPost]
-        public JsonResult SaveTwoColDesignSettings(SaveTwoColsDesignSettings settings)
-        {
-            try
-            {
-                settings.TemplateSettings = settings.TemplateSettingsValues;
-                var response = this.slideService.SaveDesignSettings(settings);
-                return Json(response, JsonRequestBehavior.DenyGet);
-            }
-            catch
-            {
-                return Json("error", JsonRequestBehavior.DenyGet);
-            }
-        }
-
-        [HttpPost]
-        public JsonResult SaveThreeColDesignSettings(SaveThreeColsDesignSettings settings)
-        {
-            try
-            {
-                settings.TemplateSettings = settings.TemplateSettingsValues;
-                var response = this.slideService.SaveDesignSettings(settings);
-                return Json(response, JsonRequestBehavior.DenyGet);
-            }
-            catch
-            {
-                return Json("error", JsonRequestBehavior.DenyGet);
             }
         }
     }

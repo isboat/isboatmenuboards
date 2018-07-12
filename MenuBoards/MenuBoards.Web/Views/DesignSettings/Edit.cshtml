@@ -1,0 +1,175 @@
+﻿@using MenuBoards.Web.MVCHelpers
+@using MenuBoards.Web.ViewModels
+@model MenuBoards.Web.ViewModels.SlideDesignSettings
+
+<h4>Design Settings</h4>
+<hr />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+<div class="row">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.SlideId)
+</div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card" style="margin-bottom: 20px">
+                <div class="card-header">Currency</div>
+                <div class="card-body">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Currency)
+                        @Html.DropDownListFor(model => model.Currency, Model.CurrencyOptions, "Please select", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Currency, "", new { @class = "text-danger" })
+                    </div>
+                </div> 
+            </div>
+            <div class="card">
+                <div class="card-header">Colors</div>
+                <div class="card-body">
+                    
+                    <div class="form-group">
+                        @Html.LabelFor(model => Model.BackgroundColor)
+                        @Html.EditorFor(model => Model.BackgroundColor, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.ValidationMessageFor(model => Model.BackgroundColor, "", new {@class = "text-danger"})
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => Model.HeadingBkgdColor)
+                        @Html.EditorFor(model => Model.HeadingBkgdColor, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.ValidationMessageFor(model => Model.HeadingBkgdColor, "", new {@class = "text-danger"})
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => Model.HeadingColor)
+                        @Html.EditorFor(model => Model.HeadingColor, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.ValidationMessageFor(model => Model.HeadingColor, "", new {@class = "text-danger"})
+                    </div>
+                    
+                    <div class="form-group">
+                        @Html.LabelFor(model => Model.MenuItemColor)
+                        @Html.EditorFor(model => Model.MenuItemColor, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => Model.MenuItemColor, "", new { @class = "text-danger" })
+                    </div>
+                </div> 
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card" style="margin-bottom: 20px">
+                <div class="card-header">Design Template</div>
+                <div class="card-body">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TemplateType)
+                        @Html.DropDownListFor(model => model.TemplateType, Model.TemplateOptions, "Please select", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.TemplateType, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="subtpl" @Html.DisplayNone(!Model.ShowSubTemplate)>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SubTemplate)
+
+
+                            <div class="singleCol" @Html.DisplayNone(!Model.ShowSingleCol)>
+                                @Html.DropDownListFor(model => model.SubTemplate, Model.SingleColSubTemplateOptions, "Please select", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.SubTemplate, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="twoCol" @Html.DisplayNone(!Model.ShowTwoCol)>
+                                @Html.DropDownListFor(model => model.SubTemplate, Model.TwoColSubTemplateOptions, "Please select", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.SubTemplate, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="threeCol" @Html.DisplayNone(!Model.ShowThreeCol)>
+                                @Html.DropDownListFor(model => model.SubTemplate, Model.ThreeColSubTemplateOptions, "Please select", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.SubTemplate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">Text sizes</div>
+                <div class="card-body">
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => Model.HeadingTextSize)
+                        @Html.EditorFor(model => Model.HeadingTextSize, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => Model.HeadingTextSize, "", new { @class = "text-danger" })
+                    </div>
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => Model.MenuItemPriceTextSize)
+                        @Html.EditorFor(model => Model.MenuItemPriceTextSize, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => Model.MenuItemPriceTextSize, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => Model.MenuItemSubTextSize)
+                        @Html.EditorFor(model => Model.MenuItemSubTextSize, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => Model.MenuItemSubTextSize, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => Model.MenuItemTextSize)
+                        @Html.EditorFor(model => Model.MenuItemTextSize, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => Model.MenuItemTextSize, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row" style="margin-top: 20px">
+        
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-info" />
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var updateSelections = function(val) {
+
+            var valid = true;
+            $(".singleCol").hide();
+            $(".twoCol").hide();
+            $(".threeCol").hide();
+
+            if (val === '@TemplateTypes.GetSingleColumn().Id') {
+                $(".singleCol").show();
+            } else if(val === '@TemplateTypes.GetTwoColumn().Id') {
+                $(".twoCol").show();
+            } else if(val === '@TemplateTypes.GetThreeColumn().Id') {
+                $(".threeCol").show();
+            } else {
+                valid = false;
+            }
+
+            if (valid) {
+                $(".subtpl").show();
+            } else {
+                $(".subtpl").hide();
+            }
+        }
+
+        $("#TemplateType").on('change', function() {
+            updateSelections($(this).val());
+        });
+
+        // Initialize
+        updateSelections($("#TemplateType").val());
+    });
+</script>

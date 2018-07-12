@@ -1,0 +1,81 @@
+﻿@using MenuBoards.Web.ViewModels
+@model MenuBoards.Web.ViewModels.Displays.MenuSlideDisplay
+
+<div>Silver template</div>
+
+<div class="sc-bronze">
+    @foreach (var menu in Model.MenuSlide.Menus)
+    {
+        <div>
+            <h1 class="menu-heading">@menu.MainMenuHeading</h1>
+        </div>
+
+        foreach (var item in menu.MenuItems)
+        {
+            <div class="menuitem">
+                <div class="row">
+                    <div class="col-sm-4">
+                        @*<img width="200" height="100" />*@
+                        <img width="200" style="background-color: gray" src="@item.ImageUrl" />
+                    </div>
+                    <div class="col-sm-8">
+                        <h4>
+                            <span>@item.Label</span>
+                            @if (!string.IsNullOrEmpty(item.SizeText))
+                            {
+                            <span>(@item.SizeText)</span>
+                            }
+                        </h4>
+                        @if (!string.IsNullOrEmpty(item.SubText))
+                        {
+                            <div class="menuitem-subtext">@item.SubText</div>
+                        }
+                        <div class="price"><strong><span>Price: </span><span>@Model.DesignSettings.Currency@item.Price</span></strong></div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+<script type="text/javascript">
+    @if (!string.IsNullOrEmpty(Model.DesignSettings.BackgroundColor))
+    {
+        @:$("body").css("background-color", '@(Model.DesignSettings.BackgroundColor)')
+    }
+
+    @if (!string.IsNullOrEmpty(Model.DesignSettings.BackgroundColor))
+    {
+        @:$("body").css("background-img", '@(Model.DesignSettings.BackgroundImg)')
+    }    
+
+    @if (!string.IsNullOrEmpty(Model.DesignSettings.HeadingBkgdColor))
+    {
+        @:$("h1.menu-heading").css("background-color", '@(Model.DesignSettings.HeadingBkgdColor)')
+    }
+
+    @if (!string.IsNullOrEmpty(Model.DesignSettings.HeadingColor))
+    {
+        @:$("h1.menu-heading").css("color", '@(Model.DesignSettings.HeadingColor)')
+    }
+
+    @if (!string.IsNullOrEmpty(Model.DesignSettings.MenuItemColor))
+    {
+        @:$(".menuitem").css("color", '@(Model.DesignSettings.MenuItemColor)')
+    }
+
+    @if (!string.IsNullOrEmpty(Model.DesignSettings.MenuItemTextSize))
+    {
+        @:$(".menuitem .menuitem-label").css("font-size", '@(Model.DesignSettings.MenuItemTextSize)px')
+    }
+
+    @if (!string.IsNullOrEmpty(Model.DesignSettings.MenuItemPriceTextSize))
+    {
+        @:$(".menuitem .price").css("font-size", '@(Model.DesignSettings.MenuItemPriceTextSize)px')
+    }
+
+    @if (!string.IsNullOrEmpty(Model.DesignSettings.MenuItemSubTextSize))
+    {
+        @:$(".menuitem .menuitem-subtext").css("font-size", '@(Model.DesignSettings.MenuItemSubTextSize)px')
+    }
+</script>

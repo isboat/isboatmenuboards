@@ -1,5 +1,4 @@
 ﻿@using MenuBoards.Web.ViewModels
-@using MenuBoards.Web.ViewModels.SubTemplates
 @model MenuBoards.Web.ViewModels.Displays.MenuSlideDisplay
 
 <div class="sc-basic">
@@ -7,68 +6,76 @@
     {
         <h1 class="menu-heading">@menu.MainMenuHeading</h1>
 
-        foreach (var item in menu.MenuItems)
+        if (menu.MenuItems == null)
         {
-            <div class="menuitem">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <h4 class="menuitem-label">
-                            <span>@item.Label</span>
-                            @if (!string.IsNullOrEmpty(item.SizeText))
-                            {
-                                <span>(@item.SizeText)</span>
-                            }
-                            <span class="price">@Model.DesignSettings.Currency@item.Price</span>
-                        </h4>
-                    </div>
+            <div>No menu items available yet</div>
+        }
+        else
+        {
 
+            foreach (var item in menu.MenuItems)
+            {
+                <div class="menuitem">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h4 class="menuitem-label">
+                                <span>@item.Label</span>
+                                @if (!string.IsNullOrEmpty(item.SizeText))
+                                {
+                                    <span>(@item.SizeText)</span>
+                                }
+                                <span class="price">@Model.DesignSettings.Currency@item.Price</span>
+                            </h4>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 menuitem-subtext">@item.SubText</div>
+                    </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm-12 menuitem-subtext">@item.SubText</div>
-                </div>
-            </div>
+            }
         }
     }
 </div>
 
 <script type="text/javascript">
-    @if (!string.IsNullOrEmpty(((SingleColumnSettings)Model.DesignSettings.TemplateSettings).BackgroundColor))
+    @if (!string.IsNullOrEmpty(Model.DesignSettings.BackgroundColor))
     {
-        @:$("body").css("background-color", '@(((SingleColumnSettings) Model.DesignSettings.TemplateSettings).BackgroundColor)')
+        @:$("body").css("background-color", '@(Model.DesignSettings.BackgroundColor)');
     }
 
-    @if (!string.IsNullOrEmpty(((SingleColumnSettings)Model.DesignSettings.TemplateSettings).BackgroundColor))
+    @if (!string.IsNullOrEmpty(Model.DesignSettings.BackgroundColor))
     {
-        @:$("body").css("background-img", '@(((SingleColumnSettings) Model.DesignSettings.TemplateSettings).BackgroundImg)')
+        @:$("body").css("background-img", '@(Model.DesignSettings.BackgroundImg)');
     }    
 
-    @if (!string.IsNullOrEmpty(((SingleColumnSettings)Model.DesignSettings.TemplateSettings).HeadingBkgdColor))
+    @if (!string.IsNullOrEmpty(Model.DesignSettings.HeadingBkgdColor))
     {
-        @:$("h1.menu-heading").css("background-color", '@(((SingleColumnSettings) Model.DesignSettings.TemplateSettings).HeadingBkgdColor)')
+        @:$("h1.menu-heading").css("background-color", '@(Model.DesignSettings.HeadingBkgdColor)');
     }
 
-    @if (!string.IsNullOrEmpty(((SingleColumnSettings)Model.DesignSettings.TemplateSettings).HeadingBkgdColor))
+    @if (!string.IsNullOrEmpty(Model.DesignSettings.HeadingBkgdColor))
     {
-        @:$("h1.menu-heading").css("color", '@(((SingleColumnSettings) Model.DesignSettings.TemplateSettings).HeadingColor)')
+        @:$("h1.menu-heading").css("color", '@(Model.DesignSettings.HeadingColor)');
     }
 
-    @if (!string.IsNullOrEmpty(((SingleColumnSettings)Model.DesignSettings.TemplateSettings).MenuItemColor))
+    @if (!string.IsNullOrEmpty(Model.DesignSettings.MenuItemColor))
     {
-        @:$(".sc-basic .menuitem").css("color", '@(((SingleColumnSettings) Model.DesignSettings.TemplateSettings).MenuItemColor)')
+        @:$(".sc-basic .menuitem").css("color", '@(Model.DesignSettings.MenuItemColor)');
     }
 
-    @if (!string.IsNullOrEmpty(((SingleColumnSettings)Model.DesignSettings.TemplateSettings).MenuItemTextSize))
+    @if (!string.IsNullOrEmpty(Model.DesignSettings.MenuItemTextSize))
     {
-        @:$(".sc-basic .menuitem .menuitem-label").css("font-size", '@(((SingleColumnSettings) Model.DesignSettings.TemplateSettings).MenuItemTextSize)px')
+        @:$(".sc-basic .menuitem .menuitem-label").css("font-size", '@(Model.DesignSettings.MenuItemTextSize)px');
     }
 
-    @if (!string.IsNullOrEmpty(((SingleColumnSettings)Model.DesignSettings.TemplateSettings).MenuItemPriceTextSize))
+    @if (!string.IsNullOrEmpty(Model.DesignSettings.MenuItemPriceTextSize))
     {
-        @:$(".sc-basic .menuitem .price").css("font-size", '@(((SingleColumnSettings) Model.DesignSettings.TemplateSettings).MenuItemPriceTextSize)px')
+        @:$(".sc-basic .menuitem .price").css("font-size", '@(Model.DesignSettings.MenuItemPriceTextSize)px');
     }
 
-    @if (!string.IsNullOrEmpty(((SingleColumnSettings)Model.DesignSettings.TemplateSettings).MenuItemSubTextSize))
+    @if (!string.IsNullOrEmpty(Model.DesignSettings.MenuItemSubTextSize))
     {
-        @:$(".sc-basic .menuitem .menuitem-subtext").css("font-size", '@(((SingleColumnSettings) Model.DesignSettings.TemplateSettings).MenuItemSubTextSize)px')
+        @:$(".sc-basic .menuitem .menuitem-subtext").css("font-size", '@(Model.DesignSettings.MenuItemSubTextSize)px');
     }
 </script>

@@ -5,64 +5,43 @@ using System.Text;
 using System.Threading.Tasks;
 using MenuBoards.Interfaces.DataAccess;
 using MenuBoards.Web.ViewModels;
-using MenuBoards.Web.ViewModels.SubTemplates;
+using MenuBoards.Web.ViewModels.Displays;
 
 namespace MenuBoards.DataAccess
 {
     public class SettingsRepository: ISettingsRepository
     {
-        private List<DesignSettings> designsettings = new List<DesignSettings>();
+        private readonly List<SlideDesignSettings> slidedesignsettings = new List<SlideDesignSettings>();
 
-        private List<DisplaySettings> displaySettings = new List<DisplaySettings>();
+        private readonly List<DisplaySettings> displaySettings = new List<DisplaySettings>();
 
-        private List<ITemplateSetting> templateSettings = new List<ITemplateSetting>();
+        private readonly Dictionary<string, string> displayCodes = new Dictionary<string, string>();
 
-        public SingleColumnSettings GetSingleColumnSettings(string settingsId)
+        private readonly ITimeStampRepository _timeStampRepository;
+
+        public SettingsRepository(ITimeStampRepository timeStampRepository)
         {
-            return new SingleColumnSettings
-            {
-                Id = "dffdfs",
-                BackgroundColor = "black",
-                HeadingBkgdColor = "white",
-                HeadingColor = "brown",
-                MenuItemSubTextSize = "12",
-                MenuItemPriceTextSize = "12",
-                HeadingTextSize = "14",
-                MenuItemTextSize = "12",
-                MenuItemColor = "red"
-            };
+            _timeStampRepository = timeStampRepository;
         }
 
-        public DesignSettings GetDesignSettings(string slideId)
+        public SlideDesignSettings GetDesignSettings(string slideId)
         {
-            var design = this.designsettings.FirstOrDefault(x => x.SlideId == slideId);
-
-
-            if (design == null) return null;
-
-            design.TemplateSettings = this.templateSettings.FirstOrDefault(x => x.DesignId == design.Id);
+            var design = this.slidedesignsettings.FirstOrDefault(x => x.SlideId == slideId);
 
             return design;
         }
 
-        public BaseResponse SaveDesignSettings(DesignSettings settings)
+        public BaseResponse SaveDesignSettings(SlideDesignSettings settings)
         {
-            var existing = this.designsettings.FirstOrDefault(x => x.Id == settings.Id);
+            var existing = this.slidedesignsettings.FirstOrDefault(x => x.Id == settings.Id);
             if (existing != null)
             {
-                this.designsettings.Remove(existing);
+                this.slidedesignsettings.Remove(existing);
             }
 
-            this.designsettings.Add(settings);
+            this.slidedesignsettings.Add(settings);
 
-            var existingttmp = this.templateSettings.FirstOrDefault(x => x.DesignId == settings.TemplateSettings.DesignId);
-            if (existingttmp != null)
-            {
-                this.templateSettings.Remove(existingttmp);
-            }
-
-            this.templateSettings.Add(settings.TemplateSettings);
-
+            this._timeStampRepository.UpdateTimeStamp(settings.SlideId);
             return new BaseResponse {Success = true};
         }
 
@@ -91,6 +70,7 @@ namespace MenuBoards.DataAccess
 
                 this.displaySettings.Add(settings);
 
+                this._timeStampRepository.UpdateTimeStamp(settings.SlideId);
                 return new BaseResponse { Success = true };
             }
             catch (Exception e)
@@ -98,6 +78,20 @@ namespace MenuBoards.DataAccess
                 Console.WriteLine(e);
                 return new BaseResponse(e.Message);
             }
+        }
+
+        public DisplayCodeResponse VerifyDisplayCode(DisplayCode code)
+        {
+            var response = new DisplayCodeResponse();
+            if (!this.displayCodes.ContainsKey(code.Code))
+            {
+                response.Message = "Code doesn't exist";
+                return response;
+            }
+
+            response.Success = true;
+            response.Account = this.displayCodes[code.Code];
+            return response;
         }
     }
 }

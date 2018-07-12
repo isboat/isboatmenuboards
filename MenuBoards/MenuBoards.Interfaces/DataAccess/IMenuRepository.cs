@@ -1,0 +1,15 @@
+﻿using System.Collections.Generic;
+using MenuBoards.Web.ViewModels;
+
+namespace MenuBoards.Interfaces.DataAccess
+{
+    public interface IMenuRepository
+    {
+        List<Menu> GetMenus(string slideId);
+
+        BaseResponse SaveMenu(Menu menu);
+
+        DeleteResponse DeleteMenu(string menuId);
+        Menu GetMenu(string id);
+    }
+}

@@ -283,6 +283,7 @@
                 var menuColTpl = $("#menuColTpl").html();
                 var $menuColTpl = $(menuColTpl);
                 $menuColTpl.attr("id", this.Id);
+                $menuColTpl.find(".menu-heading").val(this.Heading);
 
                 $menuColTpl.find('.panel-body').append(this.renderMenuForm());
                 $(".menusSection .row").append($menuColTpl);

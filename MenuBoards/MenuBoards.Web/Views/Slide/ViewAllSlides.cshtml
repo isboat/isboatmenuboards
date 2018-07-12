@@ -8,16 +8,18 @@
 @if (Model.Any())
 {
 
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                Go live date and time
-            </th>
-            <th></th>
-        </tr>
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    Go live date and time
+                </th>
+                <th></th>
+            </tr>
+        </thead>
 
         @foreach (var item in Model)
         {
@@ -30,7 +32,8 @@
                 </td>
                 <td>
                     @Html.ActionLink("Details", "SlideDetails", new {id = item.Id}) |
-                    @Html.ActionLink("Delete", "DeleteSlide", new {id = item.Id})
+                    @Html.ActionLink("Delete", "DeleteSlide", new {id = item.Id}) |
+                    @Html.ActionLink("Preview", "MenuSlide", "Display", new { slideId = item.Id, previewMode = true}, null)
                 </td>
             </tr>
         }

@@ -1,0 +1,68 @@
+﻿@using MenuBoards.Web.ViewModels
+@model MenuBoards.Web.ViewModels.Menu
+
+@{ var crumbs = new List<BreadcrumbItemViewModel>
+   {
+       new BreadcrumbItemViewModel
+       {
+           Label = "Back to Slide",
+           Url = Url.Action("SlideDetails", "Slide", new { id = Model.SlideId})
+       }
+   };
+}
+
+@{
+    Html.RenderPartial("Breadcrumb", crumbs);
+}
+
+<div>
+    <h4>Menu items for @Model.MainMenuHeading</h4>
+    <hr />
+    <p>
+        @Html.ActionLink("Add Menu Item", "AddItem", "MenuItem", new { menuId = Model.Id, slideId = Model.SlideId }, null)
+    </p>
+
+    @if (Model.MenuItems.Any())
+    {
+        <table class="menuitemstable table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th></th>
+                    <th>Label</th>
+                    <th>Size</th>
+                    <th>Price</th>
+                    <th>SubText</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            @foreach (var item in Model.MenuItems) {
+                <tr>
+                    <td>
+                        <img width="80" src="@item.ImageUrl" alt="no item image"/>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Label)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SizeText)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SubText)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "MenuItem", new { id=item.Id }, null) |
+                        @Html.ActionLink("Add Image", "AddImage", "MenuItem", new { id=item.Id, slideId = Model.SlideId, returnUrl= Url.Action("Details", "Menu", new { id = Model.Id}) }, null) |
+                        @Html.ActionLink("Delete", "Delete", "MenuItem", new { id=item.Id, slideId=item.SlideId }, null)
+                    </td>
+                </tr>
+            }
+
+        </table>
+    }
+
+</div>
+

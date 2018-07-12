@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MenuBoards.Web.ViewModels
 {
-    public class TemplateType
+    public class TemplateTypes
     {
         public static MenuTemplateType GetSingleColumn()
         {
@@ -29,7 +29,7 @@ namespace MenuBoards.Web.ViewModels
 
     }
 
-public class MenuTemplateType
+    public class MenuTemplateType
     {
         public MenuTemplateType(string name, string id, string htmlTemplateId)
         {

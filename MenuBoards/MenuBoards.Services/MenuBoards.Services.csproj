@@ -63,12 +63,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountService.cs" />
+    <Compile Include="DisplaySettingsService.cs" />
+    <Compile Include="DesignSettingsService.cs" />
     <Compile Include="DisplayService.cs" />
     <Compile Include="EnumHelper.cs" />
-    <Compile Include="IoC.cs" />
+    <Compile Include="MenuItemService.cs" />
+    <Compile Include="MenuService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SlideService.cs" />
-    <Compile Include="TemplateSettingService.cs" />
     <Compile Include="UIHelper.cs" />
   </ItemGroup>
   <ItemGroup>

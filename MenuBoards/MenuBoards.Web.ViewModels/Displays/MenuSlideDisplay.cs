@@ -6,7 +6,7 @@
 
         public MenuSlide MenuSlide { get; set; }
 
-        public DesignSettings DesignSettings { get; set; }
+        public SlideDesignSettings DesignSettings { get; set; }
 
         public DisplaySettings DisplaySettings { get; set; }
 

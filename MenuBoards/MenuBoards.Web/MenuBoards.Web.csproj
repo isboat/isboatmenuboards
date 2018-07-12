@@ -46,6 +46,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommonServiceLocator, Version=2.0.3.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.8.6\lib\net46\CommonServiceLocator.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -103,6 +106,27 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Abstractions, Version=3.3.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.8.6\lib\net46\Unity.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Configuration, Version=5.2.1.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.8.6\lib\net46\Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Container, Version=5.8.6.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.8.6\lib\net46\Unity.Container.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Interception, Version=5.5.1.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.8.6\lib\net46\Unity.Interception.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Interception.Configuration, Version=5.1.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.8.6\lib\net46\Unity.Interception.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RegistrationByConvention, Version=2.1.5.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.8.6\lib\net46\Unity.RegistrationByConvention.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ServiceLocation, Version=2.1.2.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.8.6\lib\net46\Unity.ServiceLocation.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -143,14 +167,19 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DesignSettingsController.cs" />
+    <Compile Include="Controllers\DisplaySettingsController.cs" />
     <Compile Include="Controllers\DisplayController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImagePickerController.cs" />
+    <Compile Include="Controllers\MenuController.cs" />
+    <Compile Include="Controllers\MenuItemController.cs" />
     <Compile Include="Controllers\SlideController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="MVCHelpers\HtmlHelperExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -161,13 +190,15 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\bagel.PNG" />
     <Content Include="Images\salad.PNG" />
-    <Content Include="Scripts\Libs\bootstrap.js" />
-    <Content Include="Scripts\Libs\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Scripts\Libs\jquery-1.10.2.intellisense.js" />
+    <Content Include="Images\sandwich.PNG" />
+    <Content Include="Scripts\Libs\bootstrap.js" />
+    <Content Include="Scripts\Libs\bootstrap.min.js" />
     <Content Include="Scripts\Libs\handlebars-v4.0.11.js" />
     <Content Include="Scripts\Libs\jquery-1.10.2.js" />
     <Content Include="Scripts\Libs\jquery-1.10.2.min.js" />
@@ -178,10 +209,7 @@
     <Content Include="Scripts\Libs\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\Libs\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\Libs\rivets.bundled.min.js" />
-    <Content Include="Scripts\menuBoards.displaySettings.js" />
-    <Content Include="Scripts\menuBoards.helpers.js" />
     <Content Include="Scripts\menuBoards.httpWrapper.js" />
-    <Content Include="Scripts\menuBoards.designSettings.js" />
     <Content Include="Scripts\menuBoards.menuSlide.js" />
     <Content Include="Scripts\menuBoards.templateManager.js" />
     <Content Include="Scripts\Libs\modernizr-2.6.2.js" />
@@ -203,24 +231,28 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Slide\CreateMenuSlide.cshtml" />
     <Content Include="Views\Slide\SlideDetails.cshtml" />
-    <Content Include="Views\Shared\MenuSlideDesignSettings.cshtml" />
-    <Content Include="Views\Shared\SettingsTemplates\SingleColumn.cshtml" />
-    <Content Include="Views\Shared\SettingsTemplates\TwoColumn.cshtml" />
-    <Content Include="Views\Shared\SettingsTemplates\ThreeColumn.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Slide\ViewAllSlides.cshtml" />
     <Content Include="Views\Slide\DeleteSlide.cshtml" />
-    <Content Include="Views\Shared\DisplaySettings.cshtml" />
     <Content Include="Views\Display\MenuSlide.cshtml" />
     <Content Include="Views\Display\SingleColumn\SCBasic.cshtml" />
     <Content Include="Views\Display\_MenuSlideLayout.cshtml" />
     <Content Include="Views\Display\SingleColumn\SCBronze.cshtml" />
     <Content Include="Views\ImagePicker\LoadImages.cshtml" />
+    <Content Include="Views\Menu\AddMenu.cshtml" />
+    <Content Include="Views\Slide\MenuView.cshtml" />
+    <Content Include="Views\Menu\Details.cshtml" />
+    <Content Include="Views\MenuItem\AddItem.cshtml" />
+    <Content Include="Views\DesignSettings\Edit.cshtml" />
+    <Content Include="Views\DisplaySettings\Edit.cshtml" />
+    <Content Include="Views\Shared\Breadcrumb.cshtml" />
+    <Content Include="Views\MenuItem\AddImage.cshtml" />
+    <Content Include="Views\Display\SingleColumn\SCSilver.cshtml" />
+    <Content Include="Views\Display\DisplayCode.cshtml" />
+    <Content Include="Views\Display\VisibleSlides.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Account\" />
-    <Folder Include="Views\Content\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -236,6 +268,10 @@
     <Content Include="Scripts\Libs\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MenuBoards.Core\MenuBoards.Core.csproj">
+      <Project>{4A31A6EC-750B-4780-BFE9-7964BDD0C915}</Project>
+      <Name>MenuBoards.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MenuBoards.DataAccess\MenuBoards.DataAccess.csproj">
       <Project>{D947399D-5494-4C3F-8B16-693B05ECD8E0}</Project>
       <Name>MenuBoards.DataAccess</Name>

@@ -1,0 +1,14 @@
+﻿@model IEnumerable<MenuBoards.Web.ViewModels.BreadcrumbItemViewModel>
+
+@{ var items = Model.ToList();}
+<div>
+    @for(var i = 0; i < items.Count; i++)
+    {
+        var url = items[i];
+        <a href="@url.Url">@url.Label</a>
+        if (i != items.Count - 1)
+         {
+             <span> | </span>
+         }
+    }
+</div>

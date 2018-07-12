@@ -7,7 +7,27 @@
     @foreach (var item in Model)
     {
         <div>
-            <img src="/Images/@item.Name" width="200" height="150" />
+            <img class="imageselection" src="/Images/@item.Name" width="200" height="150" />
         </div>
     }
 </div>
+
+<div>
+    <input type="text" name="selectedImage" value="" class="hide selectedImage"/>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.imageselection').on('click', function () {
+
+            $('.imageselection').css('border', 'none');
+
+            $(this).css({
+                border: 'solid 2px black'
+            });
+
+            var src = $(this).attr('src');
+            $('.selectedImage').val(src);
+        })
+    })
+</script>

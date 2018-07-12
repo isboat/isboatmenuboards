@@ -16,6 +16,6 @@
 
     public class DeleteResponse : BaseResponse
     {
-        public string SlideId { get; set; }
+        public string ItemId { get; set; }
     }
 }
