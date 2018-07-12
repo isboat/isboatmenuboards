@@ -17,17 +17,17 @@ namespace MenuBoards.Web.Controllers
 
         private const string VERIFIED_COOKIE_NAME = "verifiedcode";
 
-        public ActionResult DisplayCode()
+        public ActionResult EnterCode()
         {
-            return View();
+            return View(new DisplayCode());
         }
 
         [HttpPost]
-        public ActionResult DisplayCode(DisplayCode code)
+        public ActionResult EnterCode(DisplayCode modelDisplayCode)
         {
-            if (ValidateRequest && code != null)
+            if (ValidateRequest && modelDisplayCode != null)
             {
-                var response = this.displayService.VerifyDisplayCode(code);
+                var response = this.displayService.VerifyDisplayCode(modelDisplayCode);
                 if (response.Success)
                 {
                     var cookie = new HttpCookie(VERIFIED_COOKIE_NAME, "true");
@@ -35,23 +35,25 @@ namespace MenuBoards.Web.Controllers
                     IEnumerable<Slide> slides = this.displayService.LoadVisibleSlides(response.Account);
                     return View("VisibleSlides", slides);
                 }
+
+                modelDisplayCode.ResponseMsg = response.Message;
             }
-            return View();
+            return View(modelDisplayCode);
         }
 
-        public ActionResult MenuSlide(string slideId, bool previewMode)
+        public ActionResult MenuSlide(string slideId, bool? previewMode)
         {
             var verifiedCookie = this.Request.Cookies[VERIFIED_COOKIE_NAME];
-            if (verifiedCookie == null || verifiedCookie.Value != "true")
+            if (previewMode != true && verifiedCookie == null || verifiedCookie.Value != "true")
             {
-                return RedirectToAction("DisplayCode");
+                return RedirectToAction("EnterCode");
             }
 
             MenuSlideDisplay slide = null;
 
             if (!string.IsNullOrEmpty(slideId))
             {
-                slide = this.displayService.GetMenuSlide(slideId, previewMode);
+                slide = this.displayService.GetMenuSlide(slideId, previewMode.Value);
             }
             return View(slide);
         }

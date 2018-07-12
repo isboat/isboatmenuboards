@@ -248,7 +248,7 @@
     <Content Include="Views\Shared\Breadcrumb.cshtml" />
     <Content Include="Views\MenuItem\AddImage.cshtml" />
     <Content Include="Views\Display\SingleColumn\SCSilver.cshtml" />
-    <Content Include="Views\Display\DisplayCode.cshtml" />
+    <Content Include="Views\Display\EnterCode.cshtml" />
     <Content Include="Views\Display\VisibleSlides.cshtml" />
   </ItemGroup>
   <ItemGroup>

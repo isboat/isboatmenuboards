@@ -3,5 +3,7 @@
     public class DisplayCode
     {
         public string Code { get; set; }
+
+        public string ResponseMsg { get; set; }
     }
 }
