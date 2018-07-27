@@ -67,6 +67,7 @@
     <Compile Include="DesignSettingsService.cs" />
     <Compile Include="DisplayService.cs" />
     <Compile Include="EnumHelper.cs" />
+    <Compile Include="GlobalSettingsService.cs" />
     <Compile Include="MenuItemService.cs" />
     <Compile Include="MenuService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

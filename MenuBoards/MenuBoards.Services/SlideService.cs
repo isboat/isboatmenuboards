@@ -68,7 +68,11 @@ namespace MenuBoards.Services
 
         public IEnumerable<Slide> GetAccountVisibleSlides(string account)
         {
-            return this._menuSlideRepository.GetAccountVisibleSlides(account).Select(x => new Slide());
+            return this._menuSlideRepository.GetAccountVisibleSlides(account).Select(x => new Slide
+            {
+                Id = x.Id,
+                Name = x.Name
+            });
         }
 
         public List<SubTemplateSelectionItem> GetSubDesignTemplates(string parentId)

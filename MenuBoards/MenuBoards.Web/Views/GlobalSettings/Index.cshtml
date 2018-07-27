@@ -1,0 +1,16 @@
+﻿@model MenuBoards.Web.ViewModels.GlobalSettings
+
+<h4>Global Settings</h4>
+<div class="row">
+    <div class="col-sm-4">
+        <div class="card">
+            <div class="card-header">Display code</div>
+            <div class="card-body">@Model.DisplayCode</div>
+            <div class="card-footer">
+                <a class="btn btn-info" href="@Url.Action("CreateDisplayCode")">Get New Display Code</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+

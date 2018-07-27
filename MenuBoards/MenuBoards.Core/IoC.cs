@@ -27,11 +27,13 @@ namespace MenuBoards.Core
             container.RegisterType<IDisplayService, DisplayService>(new SingletonLifetimeManager());
             container.RegisterType<IDesignSettingsService, DesignSettingsService>(new SingletonLifetimeManager());
             container.RegisterType<IDisplaySettingsService, DisplaySettingsService>(new SingletonLifetimeManager());
+            container.RegisterType<IGlobalSettingsService, GlobalSettingsService>(new SingletonLifetimeManager());
 
             container.RegisterType<ISettingsRepository, SettingsRepository>(new SingletonLifetimeManager());
             container.RegisterType<ISlideRepository, SlideRepository>(new SingletonLifetimeManager());
             container.RegisterType<IMenuRepository, MenuRepository>(new SingletonLifetimeManager());
             container.RegisterType<IMenuItemRepository, MenuItemRepository>(new SingletonLifetimeManager());
+            container.RegisterType<IGlobalSettingsRepository, GlobalSettingsRepository>(new SingletonLifetimeManager());
 
 
             container.RegisterType<ITimeStampRepository, TimeStampRepository>(new SingletonLifetimeManager());

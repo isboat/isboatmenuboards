@@ -16,5 +16,6 @@ namespace MenuBoards.Interfaces.Web
 
         string GetTimeStamp(string slideId);
         IEnumerable<Slide> LoadVisibleSlides(string account);
+        bool IsDisplayCodeChange(string account);
     }
 }

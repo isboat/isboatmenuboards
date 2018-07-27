@@ -41,14 +41,14 @@ else
         setInterval(function() {
             $.ajax({
                 type: 'GET',
-                url: '/Display/Ping?slideId=' + '@Model.MenuSlide.Id' + '&dt=' + '@Model.DateTimeStamp',
+                url: '/Display/Ping?slideId=' + '@Model.MenuSlide.Id' + '&dt=' + '@Model.DateTimeStamp' + '&account=' + 'testaccount',
                 success: function(response) {
                     if (response === true) {
                         window.location.reload(true);
                     }
                 }
             });
-        }, 10000);  // Every 1 minute
+        }, 10000);
     })
     </script>
 }

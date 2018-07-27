@@ -15,8 +15,6 @@ namespace MenuBoards.DataAccess
 
         private readonly List<DisplaySettings> displaySettings = new List<DisplaySettings>();
 
-        private readonly Dictionary<string, string> displayCodes = new Dictionary<string, string>();
-
         private readonly ITimeStampRepository _timeStampRepository;
 
         public SettingsRepository(ITimeStampRepository timeStampRepository)
@@ -78,20 +76,6 @@ namespace MenuBoards.DataAccess
                 Console.WriteLine(e);
                 return new BaseResponse(e.Message);
             }
-        }
-
-        public DisplayCodeResponse VerifyDisplayCode(DisplayCode code)
-        {
-            var response = new DisplayCodeResponse();
-            if (!this.displayCodes.ContainsKey(code.Code))
-            {
-                response.Message = "Code doesn't exist";
-                return response;
-            }
-
-            response.Success = true;
-            response.Account = this.displayCodes[code.Code];
-            return response;
         }
     }
 }

@@ -3,14 +3,14 @@
     Layout = null;
 }
 
-<div>
-    @foreach (var item in Model)
-    {
-        <div>
-            <img class="imageselection" src="/Images/@item.Name" width="200" height="150" />
-        </div>
-    }
-</div>
+<div class="row">
+    <div class="col-sm-12">
+        @foreach (var item in Model)
+        {
+            <img class="imageselection" src="/Images/@item.Name" width="150" />
+        }
+    </div>
+    </div>
 
 <div>
     <input type="text" name="selectedImage" value="" class="hide selectedImage"/>

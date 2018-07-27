@@ -171,6 +171,7 @@
     <Compile Include="Controllers\DisplaySettingsController.cs" />
     <Compile Include="Controllers\DisplayController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\GlobalSettingsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImagePickerController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
@@ -250,6 +251,7 @@
     <Content Include="Views\Display\SingleColumn\SCSilver.cshtml" />
     <Content Include="Views\Display\EnterCode.cshtml" />
     <Content Include="Views\Display\VisibleSlides.cshtml" />
+    <Content Include="Views\GlobalSettings\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

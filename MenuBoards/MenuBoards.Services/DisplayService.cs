@@ -19,17 +19,20 @@ namespace MenuBoards.Services
 
         private readonly ITimeStampRepository _timeStampRepository;
 
+        private readonly IGlobalSettingsRepository _globalSettingsRepository;
+
         public DisplayService(ISlideService slideService, 
             IMenuService menuService, 
             IDesignSettingsService designSettingsService, 
             IDisplaySettingsService displaySettingsService, 
-            ITimeStampRepository timeStampRepository)
+            ITimeStampRepository timeStampRepository, IGlobalSettingsRepository globalSettingsRepository)
         {
             this._slideService = slideService;
             this._menuService = menuService;
             _designSettingsService = designSettingsService;
             _displaySettingsService = displaySettingsService;
             _timeStampRepository = timeStampRepository;
+            _globalSettingsRepository = globalSettingsRepository;
         }
         public MenuSlideDisplay GetMenuSlide(string slideId, bool previewMode)
         {
@@ -75,6 +78,11 @@ namespace MenuBoards.Services
         public IEnumerable<Slide> LoadVisibleSlides(string account)
         {
             return this._slideService.GetAccountVisibleSlides(account);
+        }
+
+        public bool IsDisplayCodeChange(string account)
+        {
+            return this._globalSettingsRepository.IsDisplayCodeChange(account);
         }
 
         private void SetLiveStatus(MenuSlideDisplay slide)

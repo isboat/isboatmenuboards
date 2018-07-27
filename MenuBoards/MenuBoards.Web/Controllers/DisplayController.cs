@@ -44,7 +44,7 @@ namespace MenuBoards.Web.Controllers
         public ActionResult MenuSlide(string slideId, bool? previewMode)
         {
             var verifiedCookie = this.Request.Cookies[VERIFIED_COOKIE_NAME];
-            if (previewMode != true && verifiedCookie == null || verifiedCookie.Value != "true")
+            if (previewMode == null || verifiedCookie == null || verifiedCookie.Value != "true")
             {
                 return RedirectToAction("EnterCode");
             }
@@ -60,8 +60,17 @@ namespace MenuBoards.Web.Controllers
 
 
         [HttpGet]
-        public JsonResult Ping(string slideId, string dt)
+        public JsonResult Ping(string slideId, string dt, string account)
         {
+            var isDisplayCodeChange = this.displayService.IsDisplayCodeChange(account);
+            if (isDisplayCodeChange)
+            {
+                this.Response.Cookies.Remove(VERIFIED_COOKIE_NAME);
+                this.Request.Cookies.Remove(VERIFIED_COOKIE_NAME);
+
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+
             var hasNewData = false;
 
             if (!string.IsNullOrEmpty(slideId) && !string.IsNullOrEmpty(dt))

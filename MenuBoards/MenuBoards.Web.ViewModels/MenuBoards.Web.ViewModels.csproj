@@ -70,6 +70,7 @@
     <Compile Include="Displays\DisplayCode.cs" />
     <Compile Include="Displays\DisplayCodeResponse.cs" />
     <Compile Include="Displays\MenuSlideDisplay.cs" />
+    <Compile Include="GlobalSettings.cs" />
     <Compile Include="Images\AddImage.cs" />
     <Compile Include="Images\ImageFileViewModel.cs" />
     <Compile Include="MenuItem.cs" />

@@ -21,7 +21,5 @@ namespace MenuBoards.Interfaces.DataAccess
         BaseResponse SaveDisplaySettings(DisplaySettings settings);
 
         #endregion
-
-        DisplayCodeResponse VerifyDisplayCode(DisplayCode code);
     }
 }

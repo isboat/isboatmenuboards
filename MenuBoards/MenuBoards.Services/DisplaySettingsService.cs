@@ -11,10 +11,12 @@ namespace MenuBoards.Services
     public class DisplaySettingsService : IDisplaySettingsService
     {
         private readonly ISettingsRepository _settingsRepository;
+        private readonly IGlobalSettingsRepository _globalSettingsRepository;
 
-        public DisplaySettingsService(ISettingsRepository settingsRepository)
+        public DisplaySettingsService(ISettingsRepository settingsRepository, IGlobalSettingsRepository globalSettingsRepository)
         {
             _settingsRepository = settingsRepository;
+            this._globalSettingsRepository = globalSettingsRepository;
         }
 
         public DisplaySettings GetDisplaySettings(string slideId)
@@ -31,7 +33,7 @@ namespace MenuBoards.Services
 
         public DisplayCodeResponse VerifyDisplayCode(DisplayCode code)
         {
-            return this._settingsRepository.VerifyDisplayCode(code);
+            return this._globalSettingsRepository.VerifyDisplayCode(code);
         }
     }
 }

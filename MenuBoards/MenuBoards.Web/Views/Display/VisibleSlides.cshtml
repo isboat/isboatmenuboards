@@ -1,23 +1,26 @@
 ﻿@model IEnumerable<MenuBoards.Web.ViewModels.Slide>
-
+@{
+    Layout = "~/Views/Display/_MenuSlideLayout.cshtml";
+}
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            Slides
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.ActionLink("Load", "MenuSlide", new { slideId = item.Id, previewMode = false }) |
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                <a class="btn btn-info" href="@Url.Action("MenuSlide", new {slideId = item.Id, previewMode = false})">LOAD &raquo;</a>
+            </td>
+        </tr>
+    }
 
 </table>
