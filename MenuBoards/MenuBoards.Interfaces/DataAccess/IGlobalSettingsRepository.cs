@@ -7,8 +7,6 @@ namespace MenuBoards.Interfaces.DataAccess
 
         DisplayCodeResponse VerifyDisplayCode(DisplayCode code);
 
-        bool IsDisplayCodeChange(string account);
-
         void CreateDisplayCode(string account);
 
         string GetDisplayCode(string account);

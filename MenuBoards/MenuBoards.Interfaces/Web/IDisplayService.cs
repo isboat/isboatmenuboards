@@ -15,7 +15,7 @@ namespace MenuBoards.Interfaces.Web
         DisplayCodeResponse VerifyDisplayCode(DisplayCode code);
 
         string GetTimeStamp(string slideId);
+
         IEnumerable<Slide> LoadVisibleSlides(string account);
-        bool IsDisplayCodeChange(string account);
     }
 }

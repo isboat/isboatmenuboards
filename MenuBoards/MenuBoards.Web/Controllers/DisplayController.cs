@@ -41,10 +41,10 @@ namespace MenuBoards.Web.Controllers
             return View(modelDisplayCode);
         }
 
-        public ActionResult MenuSlide(string slideId, bool? previewMode)
+        public ActionResult MenuSlide(string slideId)
         {
             var verifiedCookie = this.Request.Cookies[VERIFIED_COOKIE_NAME];
-            if (previewMode == null || verifiedCookie == null || verifiedCookie.Value != "true")
+            if (verifiedCookie == null || verifiedCookie.Value != "true")
             {
                 return RedirectToAction("EnterCode");
             }
@@ -53,20 +53,31 @@ namespace MenuBoards.Web.Controllers
 
             if (!string.IsNullOrEmpty(slideId))
             {
-                slide = this.displayService.GetMenuSlide(slideId, previewMode.Value);
+                slide = this.displayService.GetMenuSlide(slideId, false);
             }
             return View(slide);
         }
 
+        public ActionResult PreviewMenuSlide(string slideId)
+        {
+            MenuSlideDisplay slide = null;
+
+            if (!string.IsNullOrEmpty(slideId))
+            {
+                slide = this.displayService.GetMenuSlide(slideId, true);
+            }
+            return View("MenuSlide", slide);
+        }
+
 
         [HttpGet]
-        public JsonResult Ping(string slideId, string dt, string account)
+        public JsonResult Ping(string slideId, string dt, string account, string displayCode)
         {
-            var isDisplayCodeChange = this.displayService.IsDisplayCodeChange(account);
-            if (isDisplayCodeChange)
+            var response = this.displayService.VerifyDisplayCode(new DisplayCode { Account = account, Code = displayCode});
+            if (!response.Success)
             {
-                this.Response.Cookies.Remove(VERIFIED_COOKIE_NAME);
-                this.Request.Cookies.Remove(VERIFIED_COOKIE_NAME);
+                var cookie = new HttpCookie(VERIFIED_COOKIE_NAME, "false") {Expires = DateTime.Now.AddDays(-1d)};
+                this.Response.Cookies.Add(cookie);
 
                 return Json(true, JsonRequestBehavior.AllowGet);
             }

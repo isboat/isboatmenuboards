@@ -33,7 +33,7 @@
                 <td>
                     @Html.ActionLink("Details", "SlideDetails", new {id = item.Id}) |
                     @Html.ActionLink("Delete", "DeleteSlide", new {id = item.Id}) |
-                    @Html.ActionLink("Preview", "MenuSlide", "Display", new { slideId = item.Id, previewMode = true}, null)
+                    @Html.ActionLink("Preview", "PreviewMenuSlide", "Display", new { slideId = item.Id}, null)
                 </td>
             </tr>
         }

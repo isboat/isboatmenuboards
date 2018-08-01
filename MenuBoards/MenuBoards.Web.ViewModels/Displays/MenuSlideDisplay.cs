@@ -11,5 +11,9 @@
         public DisplaySettings DisplaySettings { get; set; }
 
         public bool IsLive { get; set; }
+
+        public string AccountId => "testaccount";
+
+        public string DisplayCode { get; set; }
     }
 }

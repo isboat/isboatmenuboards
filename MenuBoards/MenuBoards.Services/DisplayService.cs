@@ -48,7 +48,8 @@ namespace MenuBoards.Services
                 DateTimeStamp = this._timeStampRepository.GetTimeStamp(slide.Id),
                 MenuSlide = slide,
                 DesignSettings = this._designSettingsService.GetDesignSettings(slideId),
-                DisplaySettings = this._displaySettingsService.GetDisplaySettings(slideId)
+                DisplaySettings = this._displaySettingsService.GetDisplaySettings(slideId),
+                DisplayCode = this._globalSettingsRepository.GetDisplayCode("testaccount")
             };
 
             display.MenuSlide.Menus = this._menuService.GetMenus(slideId);
@@ -78,11 +79,6 @@ namespace MenuBoards.Services
         public IEnumerable<Slide> LoadVisibleSlides(string account)
         {
             return this._slideService.GetAccountVisibleSlides(account);
-        }
-
-        public bool IsDisplayCodeChange(string account)
-        {
-            return this._globalSettingsRepository.IsDisplayCodeChange(account);
         }
 
         private void SetLiveStatus(MenuSlideDisplay slide)

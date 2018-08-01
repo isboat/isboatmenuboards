@@ -8,7 +8,6 @@ namespace MenuBoards.DataAccess
     public class GlobalSettingsRepository: IGlobalSettingsRepository
     {
         private readonly Dictionary<string, string> displayCodes = new Dictionary<string, string>(); //account.code
-        private readonly Dictionary<string, bool> codeChange = new Dictionary<string, bool>(); //account.code
         
 
         public DisplayCodeResponse VerifyDisplayCode(DisplayCode code)
@@ -24,11 +23,6 @@ namespace MenuBoards.DataAccess
             return response;
         }
 
-        public bool IsDisplayCodeChange(string account)
-        {
-            return this.codeChange.ContainsKey(account) && this.codeChange[account];
-        }
-
         public void CreateDisplayCode(string account)
         {
             var newCode = GenerateNewCode();
@@ -40,8 +34,6 @@ namespace MenuBoards.DataAccess
             {
                 this.displayCodes[account] = newCode;
             }
-
-            this.codeChange.Add(account, true);
         }
 
         public string GetDisplayCode(string account)

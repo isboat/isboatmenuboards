@@ -41,7 +41,7 @@ else
         setInterval(function() {
             $.ajax({
                 type: 'GET',
-                url: '/Display/Ping?slideId=' + '@Model.MenuSlide.Id' + '&dt=' + '@Model.DateTimeStamp' + '&account=' + 'testaccount',
+                url: '/Display/Ping?slideId=' + '@Model.MenuSlide.Id' + '&dt=' + '@Model.DateTimeStamp' + '&account=' + '@Model.AccountId' + '&displayCode=' + '@Model.DisplayCode',
                 success: function(response) {
                     if (response === true) {
                         window.location.reload(true);
