@@ -15,8 +15,6 @@ namespace MenuBoards.Web.Controllers
     {
         private readonly IDisplayService displayService = IoC.Container.Resolve<IDisplayService>();
 
-        private const string VERIFIED_COOKIE_NAME = "verifiedcode";
-
         public ActionResult EnterCode()
         {
             return View(new DisplayCode());
@@ -30,7 +28,7 @@ namespace MenuBoards.Web.Controllers
                 var response = this.displayService.VerifyDisplayCode(modelDisplayCode);
                 if (response.Success)
                 {
-                    var cookie = new HttpCookie(VERIFIED_COOKIE_NAME, "true");
+                    var cookie = new HttpCookie(Constants.VERIFIED_COOKIE_NAME, "true");
                     this.Response.Cookies.Add(cookie);
                     IEnumerable<Slide> slides = this.displayService.LoadVisibleSlides(response.Account);
                     return View("VisibleSlides", slides);
@@ -43,7 +41,7 @@ namespace MenuBoards.Web.Controllers
 
         public ActionResult MenuSlide(string slideId)
         {
-            var verifiedCookie = this.Request.Cookies[VERIFIED_COOKIE_NAME];
+            var verifiedCookie = this.Request.Cookies[Constants.VERIFIED_COOKIE_NAME];
             if (verifiedCookie == null || verifiedCookie.Value != "true")
             {
                 return RedirectToAction("EnterCode");
@@ -76,7 +74,7 @@ namespace MenuBoards.Web.Controllers
             var response = this.displayService.VerifyDisplayCode(new DisplayCode { Account = account, Code = displayCode});
             if (!response.Success)
             {
-                var cookie = new HttpCookie(VERIFIED_COOKIE_NAME, "false") {Expires = DateTime.Now.AddDays(-1d)};
+                var cookie = new HttpCookie(Constants.VERIFIED_COOKIE_NAME, "false") {Expires = DateTime.Now.AddDays(-1d)};
                 this.Response.Cookies.Add(cookie);
 
                 return Json(true, JsonRequestBehavior.AllowGet);

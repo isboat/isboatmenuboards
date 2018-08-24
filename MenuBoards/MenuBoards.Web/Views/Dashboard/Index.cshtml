@@ -4,13 +4,15 @@
         <p>
             This allows you to set preferences and settings that apply to all slides and groups
         </p>
-        <p><a class="btn btn-default" href="@Url.Action("Index", "GlobalSettings")">Settings &raquo;</a></p>
+        <p><a class="btn btn-info" href="@Url.Action("Index", "GlobalSettings")">Settings &raquo;</a></p>
     </div>
     <div class="col-md-6">
         <h2>View Slides</h2>
-        <p>View all slides</p>
         <p>
-            @Html.ActionLink("View All", "ViewAllSlides", "Slide", null, new { @class = "btn btn-default" })
+            This allows you to view all slides and settings that apply to all slides and groups
+        </p>
+        <p>
+            <a class="btn btn-info" href="@Url.Action("ViewAllSlides", "Slide")">View all &raquo;</a>
         </p>
     </div>
 </div>

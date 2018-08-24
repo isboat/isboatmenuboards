@@ -20,6 +20,11 @@ namespace MenuBoards.Core
         {
             container = new UnityContainer();
 
+            container.RegisterType<ILoginService, LoginService>(new SingletonLifetimeManager());
+            container.RegisterType<ISessionService, SessionService>(new SingletonLifetimeManager());
+            container.RegisterType<IUserStateService, UserStateService>(new SingletonLifetimeManager());
+
+
             container.RegisterType<ISlideService, SlideService>(new SingletonLifetimeManager());
             container.RegisterType<IMenuService, MenuService>(new SingletonLifetimeManager());
             container.RegisterType<IMenuItemService, MenuItemService>(new SingletonLifetimeManager());

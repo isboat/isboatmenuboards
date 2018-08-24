@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using MenuBoards.Core
+@using MenuBoards.Interfaces.Web
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -42,6 +44,16 @@
             <li>@Html.ActionLink("About", "About", "Home")</li>
             <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
             <li>@Html.ActionLink("Get Demo", "Contact", "Home")</li>
+            <li>
+                @{ var state = IoC.Container.Resolve<IUserStateService>(); }
+                @if (state.IsLoggedIn)
+                {
+                    using (@Html.BeginForm("LogOut", "Home", FormMethod.Post, new {@class = "navbar-form navbar-right"}))
+                     {
+                         <button type="submit" class="btn btn-outline-success" title="Log Out"><strong>Log out</strong></button>
+                     }
+                }
+            </li>
         </ul>
     </div>
 </div>

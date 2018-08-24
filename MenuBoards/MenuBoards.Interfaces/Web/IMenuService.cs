@@ -14,5 +14,6 @@ namespace MenuBoards.Interfaces.Web
         Menu GetMenu(string id);
 
         Menu GetMenuDetails(string id);
+        BaseResponse MoveMenu(string id, string slideId, MoveDirection direction);
     }
 }

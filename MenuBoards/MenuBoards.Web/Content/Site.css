@@ -38,6 +38,46 @@ a, a:hover {
     color: #00ff8c;
 }
 
+.link-list {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    align-items: center;
+}
+
+    .link-list li {
+        list-style: none;
+        display: list-item;
+        text-align: -webkit-match-parent;
+    }
+    .link-list a {
+        display: inline-block;
+        color: rgba(255, 255, 255, 0.5);
+        margin: 0 20px;
+        text-transform: uppercase;
+        font-size: 12px;
+    }
+        .link-list a:hover {
+            color: #00ff8c;
+        }
+
+.position-list {
+    padding-left: 0;
+}
+.position-list a {
+    margin: 0;
+    margin-right: 10px;
+}
+
+.subtext-box {
+    width: 300px;
+}
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;

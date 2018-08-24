@@ -52,9 +52,12 @@
     <Compile Include="Web\IDesignSettingsService.cs" />
     <Compile Include="Web\IDisplayService.cs" />
     <Compile Include="Web\IGlobalSettingsService.cs" />
+    <Compile Include="Web\ILoginService.cs" />
     <Compile Include="Web\IMenuItemService.cs" />
     <Compile Include="Web\IMenuService.cs" />
+    <Compile Include="Web\ISessionService.cs" />
     <Compile Include="Web\ISlideService.cs" />
+    <Compile Include="Web\IUserStateService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MenuBoards.Web.ViewModels\MenuBoards.Web.ViewModels.csproj">

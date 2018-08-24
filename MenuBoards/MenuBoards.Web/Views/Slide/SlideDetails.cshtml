@@ -32,7 +32,7 @@ new BreadcrumbItemViewModel
 <div>
 
     <p>
-        @Html.ActionLink("Create New Menu", "AddMenu", "Menu", new { slideId = Model.Id }, null)
+        @Html.ActionLink("Create New Menu", "AddMenu", "Menu", new { slideId = Model.Id }, new { @class = "btn btn-light"})
     </p>
 
     @if (Model.Menus.Any())
@@ -45,20 +45,66 @@ new BreadcrumbItemViewModel
                         Menu Heading
                     </th>
                     <th></th>
+                    @if (Model.Menus.Count > 1)
+                    {
+                        <th>Position</th>
+                    }
                 </tr>
             </thead>
 
             @foreach (var item in Model.Menus)
             {
+                var totalPositions = Model.Menus.Count - 1;
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.MainMenuHeading)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", "Menu", new { id = item.Id }, null) |
-                        @Html.ActionLink("Details", "Details", "Menu", new { id = item.Id }, null) |
-                        @Html.ActionLink("Delete", "Delete", "Menu", new { id = item.Id }, null)
+                        <ul class="link-list">
+                            <li>@Html.ActionLink("Edit", "Edit", "Menu", new { id = item.Id }, null)</li>
+                            <li>@Html.ActionLink("View Details", "Details", "Menu", new { id = item.Id }, null)</li>
+                            <li>@Html.ActionLink("Delete", "Delete", "Menu", new { id = item.Id }, null)</li>
+                        </ul>
                     </td>
+
+                    @if (Model.Menus.Count > 1)
+                    {
+                        <td>
+                            <ul class="link-list position-list">
+                                @if (item.Position != 0)
+                                {
+                                    <li>
+                                        <a href="@Url.Action("MoveMenu", "Slide", new {id = item.Id, slideId = item.SlideId, direction = MoveDirection.Top})">
+                                            Move Top
+                                        </a>
+                                    </li>
+                                }
+                                
+                                @if (item.Position != 0 && item.Position != 1)
+                                {
+                                    <li>
+                                        <a href="@Url.Action("MoveMenu", "Slide", new {id = item.Id, slideId = item.SlideId, direction = MoveDirection.Up})">
+                                            Move Up
+                                        </a>
+                                    </li>
+                                }
+
+                                @if (item.Position != totalPositions && item.Position != totalPositions - 1)
+                                {
+                                    <li>
+                                        <a href="@Url.Action("MoveMenu", "Slide", new {id = item.Id, slideId = item.SlideId, direction = MoveDirection.Down})">Move Down</a>
+                                    </li>
+                                }
+                                
+                                @if (item.Position != totalPositions)
+                                {
+                                    <li>
+                                        <a href="@Url.Action("MoveMenu", "Slide", new {id = item.Id, slideId = item.SlideId, direction = MoveDirection.Bottom})">Move Bottom</a>
+                                    </li>
+                                }
+                            </ul>
+                        </td>
+                    }
                 </tr>
             }
 

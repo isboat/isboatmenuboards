@@ -2,13 +2,13 @@
 
 @{ var items = Model.ToList();}
 <div>
-    @for(var i = 0; i < items.Count; i++)
+    @for (var i = 0; i < items.Count; i++)
     {
         var url = items[i];
-        <a href="@url.Url">@url.Label</a>
+    <a href="@url.Url">&laquo; @url.Label</a>
         if (i != items.Count - 1)
-         {
-             <span> | </span>
-         }
+        {
+            <span> | </span>
+        }
     }
 </div>

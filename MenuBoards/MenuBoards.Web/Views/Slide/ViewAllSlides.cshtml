@@ -31,9 +31,11 @@
                     @Html.DisplayFor(modelItem => item.GoLiveDateTime)
                 </td>
                 <td>
-                    @Html.ActionLink("Details", "SlideDetails", new {id = item.Id}) |
-                    @Html.ActionLink("Delete", "DeleteSlide", new {id = item.Id}) |
-                    @Html.ActionLink("Preview", "PreviewMenuSlide", "Display", new { slideId = item.Id}, null)
+                    <ul class="link-list">
+                        <li>@Html.ActionLink("Details", "SlideDetails", new { id = item.Id })</li>
+                        <li>@Html.ActionLink("Delete", "DeleteSlide", new { id = item.Id })</li>
+                        <li>@Html.ActionLink("Preview", "PreviewMenuSlide", "Display", new { slideId = item.Id }, null)</li>
+                    </ul>
                 </td>
             </tr>
         }

@@ -179,8 +179,10 @@
     <Compile Include="Controllers\SlideController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="MVCHelpers\HtmlHelperExtensions.cs" />
+    <Compile Include="Mvc\RequiresAuthenticationAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -189,13 +191,13 @@
     <Content Include="Content\jquery.datetimepicker.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Global.asax" />
+    <Content Include="Global.asax">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Site.css" />
     <Content Include="Images\bagel.PNG" />
     <Content Include="Images\salad.PNG" />
-    <Content Include="ApplicationInsights.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\Libs\jquery-1.10.2.intellisense.js" />
     <Content Include="Images\sandwich.PNG" />
     <Content Include="Scripts\Libs\bootstrap.js" />
@@ -252,6 +254,7 @@
     <Content Include="Views\Display\EnterCode.cshtml" />
     <Content Include="Views\Display\VisibleSlides.cshtml" />
     <Content Include="Views\GlobalSettings\Index.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

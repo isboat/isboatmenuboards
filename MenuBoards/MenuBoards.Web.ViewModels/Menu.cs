@@ -9,6 +9,8 @@ namespace MenuBoards.Web.ViewModels
 
         public string SlideId { get; set; }
 
+        public int Position { get; set; }
+
         [DisplayName("Menu Heading")]
         public string MainMenuHeading { get; set; }
 

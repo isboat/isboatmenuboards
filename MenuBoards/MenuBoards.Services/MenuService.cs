@@ -21,11 +21,6 @@ namespace MenuBoards.Services
 
         public BaseResponse SaveMenu(Menu menu)
         {
-            if (string.IsNullOrEmpty(menu.Id))
-            {
-                menu.Id = Guid.NewGuid().ToString().Replace("-", "");
-            }
-
             return this._menuRepository.SaveMenu(menu);
         }
 
@@ -60,6 +55,11 @@ namespace MenuBoards.Services
             }
 
             return menu;
+        }
+
+        public BaseResponse MoveMenu(string id, string slideId, MoveDirection direction)
+        {
+            return this._menuRepository.MoveMenu(id, slideId, direction);
         }
     }
 }

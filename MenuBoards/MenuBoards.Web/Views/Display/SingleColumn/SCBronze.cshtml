@@ -8,30 +8,38 @@
             <h1 class="menu-heading">@menu.MainMenuHeading</h1>
         </div>
 
-        foreach (var item in menu.MenuItems)
+        if (menu.MenuItems == null)
         {
-            <div class="menuitem">
-                <div class="row">
-                    <div class="col-sm-4">
-                        @*<img width="200" height="100" />*@
-                        <img width="200" style="background-color: gray" src="@item.ImageUrl" />
-                    </div>
-                    <div class="col-sm-8">
-                        <h4>
-                            <span>@item.Label</span>
-                            @if (!string.IsNullOrEmpty(item.SizeText))
+            <div>No menu items available yet</div>
+        }
+        else
+        {
+            foreach (var item in menu.MenuItems)
+            {
+                <div class="menuitem">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            @*<img width="200" height="100" />*@
+                            <img width="200" style="background-color: gray" src="@item.ImageUrl"/>
+                        </div>
+                        <div class="col-sm-8">
+                            <h4>
+                                <span>@item.Label</span>
+                                @if (!string.IsNullOrEmpty(item.SizeText))
+                                {
+                                    <span>(@item.SizeText)</span>
+                                }
+                            </h4>
+                            @if (!string.IsNullOrEmpty(item.SubText))
                             {
-                            <span>(@item.SizeText)</span>
+                                <div class="menuitem-subtext">@item.SubText</div>
                             }
-                        </h4>
-                        @if (!string.IsNullOrEmpty(item.SubText))
-                        {
-                            <div class="menuitem-subtext">@item.SubText</div>
-                        }
-                        <div class="price"><strong><span>Price: </span><span>@Model.DesignSettings.Currency@item.Price</span></strong></div>
+                            <div class="price"><strong><span>Price: </span><span>@Model.DesignSettings.Currency@item.Price</span></strong>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
         }
     }
 </div>

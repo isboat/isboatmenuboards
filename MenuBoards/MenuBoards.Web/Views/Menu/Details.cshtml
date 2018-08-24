@@ -31,7 +31,7 @@
                     <th>Label</th>
                     <th>Size</th>
                     <th>Price</th>
-                    <th>SubText</th>
+                    <th class="subtext-box">Sub text</th>
                     <th></th>
                 </tr>
             </thead>
@@ -50,13 +50,18 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Price)
                     </td>
-                    <td>
+                    <td class="subtext-box">
                         @Html.DisplayFor(modelItem => item.SubText)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", "MenuItem", new { id=item.Id }, null) |
-                        @Html.ActionLink("Add Image", "AddImage", "MenuItem", new { id=item.Id, slideId = Model.SlideId, returnUrl= Url.Action("Details", "Menu", new { id = Model.Id}) }, null) |
-                        @Html.ActionLink("Delete", "Delete", "MenuItem", new { id=item.Id, slideId=item.SlideId }, null)
+
+                        <ul class="link-list">
+                            <li>@Html.ActionLink("Edit", "Edit", "MenuItem", new { id = item.Id }, null)</li>
+                            <li>
+                                @Html.ActionLink("Add Image", "AddImage", "MenuItem", new { id = item.Id, slideId = Model.SlideId, returnUrl = Url.Action("Details", "Menu", new { id = Model.Id }) }, null)
+                            </li>
+                            <li>@Html.ActionLink("Delete", "Delete", "MenuItem", new { id = item.Id, slideId = item.SlideId }, null)</li>
+                        </ul>
                     </td>
                 </tr>
             }

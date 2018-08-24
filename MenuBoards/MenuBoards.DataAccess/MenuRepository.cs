@@ -34,15 +34,23 @@ namespace MenuBoards.DataAccess
         {
             try
             {
-                var existing = this.menus.FirstOrDefault(x => x.Id == menu.Id);
-
-                if (existing != null)
+                if (string.IsNullOrEmpty(menu.Id))
                 {
-                    this.menus.Remove(existing);
+                    menu.Id = Guid.NewGuid().ToString().Replace("-", "");
+                    menu.Position = this.menus.FindAll(x => x.SlideId == menu.SlideId).Count;
+                    this.menus.Add(menu);
                 }
-
-                this.menus.Add(menu);
-
+                else
+                {
+                    var existing = this.menus.FirstOrDefault(x => x.Id == menu.Id);
+                    if (existing != null)
+                    {
+                        existing.MainMenuHeading = menu.MainMenuHeading;
+                        existing.MenuItems = menu.MenuItems;
+                        existing.Position = menu.Position;
+                    }
+                }
+                
                 this._timeStampRepository.UpdateTimeStamp(menu.SlideId);
 
                 return new BaseResponse { Success = true };
@@ -85,6 +93,61 @@ namespace MenuBoards.DataAccess
         public Menu GetMenu(string id)
         {
             return this.menus.FirstOrDefault(m => m.Id == id);
+        }
+
+        public BaseResponse MoveMenu(string id, string slideId, MoveDirection direction)
+        {
+            var slideMenus = this.menus.FindAll(x => x.SlideId == slideId);
+            var curItem = slideMenus.FirstOrDefault(x => x.Id == id);
+            if (curItem != null)
+            {
+                switch (direction)
+                {
+                    case MoveDirection.Top:
+                        if (curItem.Position > 0)
+                        {
+                            curItem.Position = 0;
+                            foreach (var menu in slideMenus.Where(x => x.Id != curItem.Id))
+                            {
+                                menu.Position += 1;
+                            }
+                        }
+                        break;
+                    case MoveDirection.Bottom:
+                        var lastPositions = slideMenus.Count - 1;
+                        if (curItem.Position != lastPositions)
+                        {
+                            curItem.Position = lastPositions;
+                            foreach (var menu in slideMenus.Where(x => x.Id != curItem.Id))
+                            {
+                                menu.Position -= 1;
+                            }
+                        }
+                        break;
+                    case MoveDirection.Up:
+                        curItem.Position -= 1;
+                        foreach (var menu in slideMenus.Where(x => x.Id != curItem.Id && x.Position >= curItem.Position))
+                        {
+                            menu.Position += 1;
+                        }
+                        break;
+                    case MoveDirection.Down:
+                        curItem.Position += 1;
+                        foreach (var menu in slideMenus.Where(x => x.Id != curItem.Id && x.Position <= curItem.Position))
+                        {
+                            menu.Position -= 1;
+                        }
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
+                }
+
+                this._timeStampRepository.UpdateTimeStamp(slideId);
+
+                return new BaseResponse { Success = true};
+            }
+
+            return new BaseResponse($"No such menu with id={id}, slideid={slideId}");
         }
     }
 }

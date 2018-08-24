@@ -50,7 +50,7 @@ namespace MenuBoards.Services
 
             if (slide != null)
             {
-                slide.Menus = this._menuRepository.GetMenus(id);
+                slide.Menus = this._menuRepository.GetMenus(id).OrderBy(x => x.Position).ToList();
             }
             return slide;
         }

@@ -11,5 +11,7 @@ namespace MenuBoards.Interfaces.DataAccess
 
         DeleteResponse DeleteMenu(string menuId);
         Menu GetMenu(string id);
+
+        BaseResponse MoveMenu(string id, string slideId, MoveDirection direction);
     }
 }

@@ -86,44 +86,51 @@ namespace MenuBoards.Web.Controllers
                 return RedirectToAction("Index");
             }
         }
+        
 
-        [HttpGet]
-        public JsonResult SlideMenus(string slideId)
+        public ActionResult MoveMenu(string id, string slideId, MoveDirection direction)
         {
-            var result = this.menuService.GetMenus(slideId);
-            return Json(result, JsonRequestBehavior.AllowGet);
+            var response = this.menuService.MoveMenu(id, slideId, direction);
+            return RedirectToAction("SlideDetails", new {id = slideId});
         }
 
-        [HttpPost]
-        public JsonResult SaveMenu(Menu menu)
-        {
-            if (!string.IsNullOrEmpty(menu?.Id))
-            {
-                var result = this.menuService.SaveMenu(menu);
-                return Json(result, JsonRequestBehavior.DenyGet);
-            }
+        //[HttpGet]
+        //public JsonResult SlideMenus(string slideId)
+        //{
+        //    var result = this.menuService.GetMenus(slideId);
+        //    return Json(result, JsonRequestBehavior.AllowGet);
+        //}
 
-            return Json(new BaseResponse {Message = "Menu or id is null"}, JsonRequestBehavior.DenyGet);
-        }
+        //[HttpPost]
+        //public JsonResult SaveMenu(Menu menu)
+        //{
+        //    if (!string.IsNullOrEmpty(menu?.Id))
+        //    {
+        //        var result = this.menuService.SaveMenu(menu);
+        //        return Json(result, JsonRequestBehavior.DenyGet);
+        //    }
 
-        [HttpGet]
-        public JsonResult DeleteMenu(string id)
-        {
-            try
-            {
-                if (!string.IsNullOrEmpty(id))
-                {
-                    var result = this.menuService.DeleteMenu(id);
-                    return Json(result, JsonRequestBehavior.AllowGet);
-                }
+        //    return Json(new BaseResponse {Message = "Menu or id is null"}, JsonRequestBehavior.DenyGet);
+        //}
 
-                return Json(new BaseResponse { Message = "id is null" }, JsonRequestBehavior.AllowGet);
-            }
-            catch
-            {
-                return Json(new BaseResponse { Message = "Error occured" }, JsonRequestBehavior.AllowGet);
-            }
-        }
+        //[HttpGet]
+        //public JsonResult DeleteMenu(string id)
+        //{
+        //    try
+        //    {
+        //        if (!string.IsNullOrEmpty(id))
+        //        {
+        //            var result = this.menuService.DeleteMenu(id);
+        //            return Json(result, JsonRequestBehavior.AllowGet);
+        //        }
+
+        //        return Json(new BaseResponse { Message = "id is null" }, JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch
+        //    {
+        //        return Json(new BaseResponse { Message = "Error occured" }, JsonRequestBehavior.AllowGet);
+        //    }
+        //}
 
         [HttpGet]
         public JsonResult GetDisplaySettings(string slideId)
