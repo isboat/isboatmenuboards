@@ -1,84 +1,71 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Threading.Tasks;
-//using System.Web;
-//using System.Web.Mvc;
-//using MenuBoards.Interfaces.Web;
-//using MenuBoards.Web.ModelServices;
-//using MenuBoards.Web.ViewModels;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
+using MenuBoards.Core;
+using MenuBoards.Interfaces.Web;
+using MenuBoards.Services;
+using MenuBoards.Web.Mvc;
+using MenuBoards.Web.ViewModels;
 
-//namespace MenuBoards.Web.Controllers
-//{
-//    public class AccountController : Controller
-//    {
-//        #region Instances Variables
+namespace MenuBoards.Web.Controllers
+{
+    public class AccountController : Controller
+    {
+        #region Instances Variables
 
-//        private readonly IAccountService accountService = new AccountService();
+        private readonly IAccountService accountService = IoC.Container.Resolve<IAccountService>();
 
-//        #endregion
+        #endregion
 
-//        // GET: Account
-//        public ActionResult Index()
-//        {
-//            return View();
-//        }
+        //
+        // POST: /Account/Register
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult Registerauser()
+        {
+            return View("Register", new RegisterViewModel());
+        }
 
-//        // GET: Account/Details/5
-//        public ActionResult Details(int id)
-//        {
-//            return View();
-//        }
+        //
+        // POST: /Account/Register
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult Registerauser(RegisterViewModel model)
+        {
+            if (this.ValidateRequest && this.ModelState.IsValid)
+            {
+                var baseResponse = this.accountService.Register(model);
 
-//        //
-//        // POST: /Account/Register
-//        [HttpPost]
-//        [AllowAnonymous]
-//        [ValidateAntiForgeryToken]
-//        public ActionResult Register(RegisterViewModel model)
-//        {
-//            try
-//            {
-//                if (this.Request.IsAuthenticated && this.User.UserLoginRole < 2)
-//                {
-//                    return this.RedirectToAction("Index", "Home");
-//                }
+                return View("BaseResponse", baseResponse);
+            }
 
-//                var model = new RegisterRequest
-//                {
-//                    MembershipTypeOptions = UIHelper.GetMembershipTypeOptions(),
-//                    GenderOptions = UIHelper.GetGenderOptions()
-//                };
+            return View("Register", model);
+        }
 
-//                return View(model);
-//            }
-//            catch (Exception ex)
-//            {
-//                this.logProvider.Error(this.Request.RawUrl, ex);
-//                throw;
-//            }
-//        }
+        [RequiresAuthentication]
+        public ActionResult ChangePassword()
+        {
+            return View(new ChangePasswordViewModel());
+        }
 
-//        // POST: Account/Create
-//        [HttpPost]
-//        public ActionResult Create(FormCollection collection)
-//        {
-//            try
-//            {
-//                // TODO: Add insert logic here
+        [HttpPost]
+        [RequiresAuthentication]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangePassword(ChangePasswordViewModel model)
+        {
+            if (ValidateRequest && this.ModelState.IsValid)
+            {
+                var baseResponse =
+                    this.accountService.ChangePassword(model.Email, model.CurrentPassword, model.NewPassword);
 
-//                return RedirectToAction("Index");
-//            }
-//            catch
-//            {
-//                return View();
-//            }
-//        }
+                return View("BaseResponse", baseResponse);
+            }
 
-//        #region Helpers
-
-        
-
-//        #endregion
-//    }
-//}
+            return View(model);
+        }
+    }
+}

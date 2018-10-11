@@ -21,6 +21,7 @@ namespace MenuBoards.Core
             container = new UnityContainer();
 
             container.RegisterType<ILoginService, LoginService>(new SingletonLifetimeManager());
+            container.RegisterType<IAccountService, AccountService>(new SingletonLifetimeManager());
             container.RegisterType<ISessionService, SessionService>(new SingletonLifetimeManager());
             container.RegisterType<IUserStateService, UserStateService>(new SingletonLifetimeManager());
 
@@ -39,6 +40,8 @@ namespace MenuBoards.Core
             container.RegisterType<IMenuRepository, MenuRepository>(new SingletonLifetimeManager());
             container.RegisterType<IMenuItemRepository, MenuItemRepository>(new SingletonLifetimeManager());
             container.RegisterType<IGlobalSettingsRepository, GlobalSettingsRepository>(new SingletonLifetimeManager());
+
+            container.RegisterType<IAccountRepository, AccountRepository>(new SingletonLifetimeManager());
 
 
             container.RegisterType<ITimeStampRepository, TimeStampRepository>(new SingletonLifetimeManager());

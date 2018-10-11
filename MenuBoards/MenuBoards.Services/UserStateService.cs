@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using MenuBoards.Interfaces.Web;
+using MenuBoards.Web.ViewModels;
 
 namespace MenuBoards.Services
 {
@@ -44,7 +45,7 @@ namespace MenuBoards.Services
         /// <value>
         /// The who is logged in.
         /// </value>
-        public string WhoIsLoggedIn
+        public UserSession WhoIsLoggedIn
         {
             get
             {
@@ -54,11 +55,11 @@ namespace MenuBoards.Services
 
                     if (session != null)
                     {
-                        return session.Username;
+                        return session;
                     }
                 }
 
-                return string.Empty;
+                return new UserSession();
             }
         }
 

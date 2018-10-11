@@ -1,0 +1,10 @@
+﻿@model MenuBoards.Web.ViewModels.BaseResponse
+
+@if (Model.Success)
+{
+    <span class="text-success">Successful</span>
+}
+else
+{
+    <span class="text-danger">@Model.Message</span>
+}

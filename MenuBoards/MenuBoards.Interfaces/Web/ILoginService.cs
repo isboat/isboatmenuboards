@@ -4,7 +4,7 @@ namespace MenuBoards.Interfaces.Web
 {
     public interface ILoginService
     {
-        BaseResponse LogIn(string username, string password);
+        UserViewModel LogIn(string username, string password);
 
         void LogOut();
     }

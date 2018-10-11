@@ -7,7 +7,9 @@ namespace MenuBoards.Interfaces.DataAccess
     {
         string CreateMenuSlide(MenuSlide model);
 
-        List<MenuSlide> GetAllMenuSlides();
+        MenuSlide GetMenuSlide(string id);
+
+        List<MenuSlide> GetAllMenuSlides(string accountId);
 
         List<MenuSlide> GetAccountVisibleSlides(string account);
 

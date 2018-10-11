@@ -9,7 +9,7 @@ namespace MenuBoards.Interfaces.Web
 
         List<Menu> GetMenus(string slideId);
 
-        DeleteResponse DeleteMenu(string id);
+        DeleteResponse DeleteMenu(DeleteItem item);
 
         Menu GetMenu(string id);
 

@@ -1,4 +1,6 @@
-﻿namespace MenuBoards.Interfaces.Web
+﻿using MenuBoards.Web.ViewModels;
+
+namespace MenuBoards.Interfaces.Web
 {
     public interface IUserStateService
     {
@@ -16,7 +18,7 @@
         /// <value>
         /// The who is logged in.
         /// </value>
-        string WhoIsLoggedIn { get; }
+        UserSession WhoIsLoggedIn { get; }
 
         /// <summary>
         /// Gets a value indicating whether this instance is logged in.

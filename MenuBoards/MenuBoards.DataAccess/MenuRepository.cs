@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using MenuBoards.Interfaces.DataAccess;
 using MenuBoards.Web.ViewModels;
+using MySql.Data.MySqlClient;
 
 namespace MenuBoards.DataAccess
 {
-    public class MenuRepository: TimeStampRepository, IMenuRepository
+    public class MenuRepository: BaseRepository, IMenuRepository
     {
         private readonly ITimeStampRepository _timeStampRepository;
-
-        private List<Menu> menus = new List<Menu>();
-
+        
         public MenuRepository(ITimeStampRepository timeStampRepository)
         {
             _timeStampRepository = timeStampRepository;
@@ -19,85 +19,148 @@ namespace MenuBoards.DataAccess
 
         public List<Menu> GetMenus(string slideId)
         {
+            var menus = new List<Menu>();
             try
             {
-                return this.menus.FindAll(x => x.SlideId == slideId).ToList();
+                var query = $"select * from menus where slideid='{slideId}'";
+
+                using (var connection = new MySqlConnection(this.ConnectionString))
+                {
+                    using (var cmd = new MySqlCommand(query, connection))
+                    {
+                        cmd.CommandType = CommandType.Text;
+                        connection.Open();
+
+                        var record = cmd.ExecuteReader();
+
+                        while (record.Read())
+                        {
+                            menus.Add(
+                                new Menu
+                                {
+                                    SlideId = record["slideid"].ToString(),
+                                    MainMenuHeading = record["heading"].ToString(),
+                                    Position = Convert.ToInt32(record["position"].ToString()),
+                                    Id = record["id"].ToString()
+                                });
+                        }
+                    }
+                }
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                return null;
+                //Console.WriteLine(e);
+                //throw;
             }
+
+            return menus;
         }
 
         public BaseResponse SaveMenu(Menu menu)
         {
+            var baseResponse = new BaseResponse();
             try
             {
+                string query;
+
+                // New menu item
                 if (string.IsNullOrEmpty(menu.Id))
                 {
-                    menu.Id = Guid.NewGuid().ToString().Replace("-", "");
-                    menu.Position = this.menus.FindAll(x => x.SlideId == menu.SlideId).Count;
-                    this.menus.Add(menu);
+                    menu.Id = this.GenerateId();
+                    menu.Position = this.GetMenus(menu.SlideId).Count;
+
+                    query =
+                        $"insert into menus(id, slideid, position, heading) values('{menu.Id}', '{menu.SlideId}','{menu.Position}','{menu.MainMenuHeading}')";
                 }
                 else
                 {
-                    var existing = this.menus.FirstOrDefault(x => x.Id == menu.Id);
-                    if (existing != null)
-                    {
-                        existing.MainMenuHeading = menu.MainMenuHeading;
-                        existing.MenuItems = menu.MenuItems;
-                        existing.Position = menu.Position;
-                    }
+                    query =
+                        $"update menus set position='{menu.Position}', heading='{menu.MainMenuHeading}' where id='{menu.Id}'";
                 }
-                
-                this._timeStampRepository.UpdateTimeStamp(menu.SlideId);
 
-                return new BaseResponse { Success = true };
+                var record = this.ExecuteNonQuery(query);
+
+                if (record == 1)
+                {
+                    this._timeStampRepository.UpdateTimeStamp(menu.SlideId);
+                    baseResponse.Success = true;
+                }
+
+                return baseResponse;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                return new BaseResponse();
+                return baseResponse;
             }
         }
 
-        public DeleteResponse DeleteMenu(string menuId)
+        public DeleteResponse DeleteMenu(DeleteItem item)
         {
-            var response = new DeleteResponse();
+            var response = new DeleteResponse { ItemId = item.SlideId};
+
+
             try
             {
-                var m = this.menus.FirstOrDefault(x => x.Id == menuId);
-                if (m == null)
+                var query = $"delete from menus where id='{item.Id}'";
+
+                var record = this.ExecuteNonQuery(query);
+
+                if (record == 1)
                 {
-                    response.Message = "Menu not found";
-                    return response;
+                    this._timeStampRepository.UpdateTimeStamp(item.SlideId);
+                    response.Success = true;
                 }
-
-                response.ItemId = m.SlideId;
-
-                this.menus.Remove(m);
-                response.Success = true;
-
-                this._timeStampRepository.UpdateTimeStamp(response.ItemId);
-
-                return response;
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                return response;
+                //Console.WriteLine(e);
+                //throw;
             }
+
+            return response;
         }
 
         public Menu GetMenu(string id)
         {
-            return this.menus.FirstOrDefault(m => m.Id == id);
+            try
+            {
+                var query = $"select * from menus where id='{id}'";
+
+                using (var connection = new MySqlConnection(this.ConnectionString))
+                {
+                    using (var cmd = new MySqlCommand(query, connection))
+                    {
+                        cmd.CommandType = CommandType.Text;
+                        connection.Open();
+
+                        var record = cmd.ExecuteReader();
+
+                        if(record.Read())
+                        {
+                            return new Menu
+                            {
+                                SlideId = record["slideid"].ToString(),
+                                MainMenuHeading = record["heading"].ToString(),
+                                Position = Convert.ToInt32(record["position"].ToString()),
+                                Id = record["id"].ToString()
+                            };
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                //Console.WriteLine(e);
+                //throw;
+            }
+
+            return null;
         }
 
         public BaseResponse MoveMenu(string id, string slideId, MoveDirection direction)
         {
-            var slideMenus = this.menus.FindAll(x => x.SlideId == slideId);
+            var slideMenus = this.GetMenus(slideId);
             var curItem = slideMenus.FirstOrDefault(x => x.Id == id);
             if (curItem != null)
             {
@@ -141,6 +204,11 @@ namespace MenuBoards.DataAccess
                     default:
                         throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
                 }
+                
+                slideMenus.ForEach(m =>
+                {
+                    this.SaveMenu(m);
+                });
 
                 this._timeStampRepository.UpdateTimeStamp(slideId);
 

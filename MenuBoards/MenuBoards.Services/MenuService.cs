@@ -29,9 +29,9 @@ namespace MenuBoards.Services
             return this._menuRepository.GetMenus(slideId);
         }
 
-        public DeleteResponse DeleteMenu(string id)
+        public DeleteResponse DeleteMenu(DeleteItem item)
         {
-            var response = this._menuRepository.DeleteMenu(id);
+            var response = this._menuRepository.DeleteMenu(item);
 
             if (response.Success)
             {

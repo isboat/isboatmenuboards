@@ -65,6 +65,7 @@
     <Compile Include="BaseItem.cs" />
     <Compile Include="BaseResponse.cs" />
     <Compile Include="BreadcrumbItemViewModel.cs" />
+    <Compile Include="ChangePasswordViewModel.cs" />
     <Compile Include="DeleteItem.cs" />
     <Compile Include="DisplaySettings.cs" />
     <Compile Include="Displays\DisplayCode.cs" />
@@ -86,6 +87,8 @@
     <Compile Include="MenuTemplateType.cs" />
     <Compile Include="SlideType.cs" />
     <Compile Include="SubTemplateSelectionItem.cs" />
+    <Compile Include="UserSession.cs" />
+    <Compile Include="UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

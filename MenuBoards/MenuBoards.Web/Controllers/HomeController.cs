@@ -32,12 +32,12 @@ namespace MenuBoards.Web.Controllers
 
                 var result = this.loginService.LogIn(model.Username, model.Password);
 
-                if (result.Success)
+                if (result != null)
                 {
                     return this.RedirectToAction("Index", "Dashboard");
                 }
 
-                model.Message = result.Message;
+                model.Message = "Auth failed. Try again.";
                 return View(model);
             }
             catch (Exception ex)

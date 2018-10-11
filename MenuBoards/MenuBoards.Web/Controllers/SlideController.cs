@@ -8,6 +8,7 @@ using System.Web.Routing;
 using MenuBoards.Core;
 using MenuBoards.Interfaces.Web;
 using MenuBoards.Services;
+using MenuBoards.Web.Mvc;
 using MenuBoards.Web.ViewModels;
 
 namespace MenuBoards.Web.Controllers
@@ -16,8 +17,9 @@ namespace MenuBoards.Web.Controllers
     {
         private readonly ISlideService slideService = IoC.Container.Resolve<ISlideService>();
         private readonly IMenuService menuService = IoC.Container.Resolve<IMenuService>();
+
         
-        // GET: Slide/Create
+        [RequiresAuthentication]
         public ActionResult CreateMenuSlide()
         {
             var model = new MenuSlide();
@@ -25,13 +27,14 @@ namespace MenuBoards.Web.Controllers
             return View(model);
         }
 
-        // POST: Slide/Create
+        
         [HttpPost]
+        [RequiresAuthentication]
         public ActionResult CreateMenuSlide(MenuSlide model)
         {
             try
             {
-                if (model != null && !string.IsNullOrEmpty(model.Name))
+                if (!string.IsNullOrEmpty(model?.Name))
                 {
                     var slideId = this.slideService.CreateMenuSlide(model);
                     if (!string.IsNullOrEmpty(slideId))
@@ -39,7 +42,7 @@ namespace MenuBoards.Web.Controllers
                         return RedirectToAction("SlideDetails", new {id = slideId});
                     }
                 }
-                // TODO: Add insert logic here
+
                 return RedirectToAction("Index");
             }
             catch
@@ -48,6 +51,7 @@ namespace MenuBoards.Web.Controllers
             }
         }
 
+        [RequiresAuthentication]
         public ActionResult ViewAllSlides()
         {
             try
@@ -61,6 +65,7 @@ namespace MenuBoards.Web.Controllers
             }
         }
 
+        [RequiresAuthentication]
         public ActionResult SlideDetails(string id)
         {
             try
@@ -74,6 +79,7 @@ namespace MenuBoards.Web.Controllers
             }
         }
 
+        [RequiresAuthentication]
         public ActionResult DeleteSlide(string id)
         {
             try
@@ -86,52 +92,15 @@ namespace MenuBoards.Web.Controllers
                 return RedirectToAction("Index");
             }
         }
-        
 
+        [RequiresAuthentication]
         public ActionResult MoveMenu(string id, string slideId, MoveDirection direction)
         {
             var response = this.menuService.MoveMenu(id, slideId, direction);
             return RedirectToAction("SlideDetails", new {id = slideId});
         }
 
-        //[HttpGet]
-        //public JsonResult SlideMenus(string slideId)
-        //{
-        //    var result = this.menuService.GetMenus(slideId);
-        //    return Json(result, JsonRequestBehavior.AllowGet);
-        //}
-
-        //[HttpPost]
-        //public JsonResult SaveMenu(Menu menu)
-        //{
-        //    if (!string.IsNullOrEmpty(menu?.Id))
-        //    {
-        //        var result = this.menuService.SaveMenu(menu);
-        //        return Json(result, JsonRequestBehavior.DenyGet);
-        //    }
-
-        //    return Json(new BaseResponse {Message = "Menu or id is null"}, JsonRequestBehavior.DenyGet);
-        //}
-
-        //[HttpGet]
-        //public JsonResult DeleteMenu(string id)
-        //{
-        //    try
-        //    {
-        //        if (!string.IsNullOrEmpty(id))
-        //        {
-        //            var result = this.menuService.DeleteMenu(id);
-        //            return Json(result, JsonRequestBehavior.AllowGet);
-        //        }
-
-        //        return Json(new BaseResponse { Message = "id is null" }, JsonRequestBehavior.AllowGet);
-        //    }
-        //    catch
-        //    {
-        //        return Json(new BaseResponse { Message = "Error occured" }, JsonRequestBehavior.AllowGet);
-        //    }
-        //}
-
+        [RequiresAuthentication]
         [HttpGet]
         public JsonResult GetDisplaySettings(string slideId)
         {

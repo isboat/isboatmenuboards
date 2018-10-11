@@ -9,7 +9,8 @@ namespace MenuBoards.Interfaces.DataAccess
 
         BaseResponse SaveMenu(Menu menu);
 
-        DeleteResponse DeleteMenu(string menuId);
+        DeleteResponse DeleteMenu(DeleteItem item);
+
         Menu GetMenu(string id);
 
         BaseResponse MoveMenu(string id, string slideId, MoveDirection direction);

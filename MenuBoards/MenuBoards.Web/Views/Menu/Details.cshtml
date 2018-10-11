@@ -1,31 +1,32 @@
 ﻿@using MenuBoards.Web.ViewModels
 @model MenuBoards.Web.ViewModels.Menu
 
-@{ var crumbs = new List<BreadcrumbItemViewModel>
-   {
-       new BreadcrumbItemViewModel
-       {
-           Label = "Back to Slide",
-           Url = Url.Action("SlideDetails", "Slide", new { id = Model.SlideId})
-       }
-   };
-}
+@if (Model != null)
+{
 
-@{
-    Html.RenderPartial("Breadcrumb", crumbs);
-}
-
-<div>
-    <h4>Menu items for @Model.MainMenuHeading</h4>
-    <hr />
-    <p>
-        @Html.ActionLink("Add Menu Item", "AddItem", "MenuItem", new { menuId = Model.Id, slideId = Model.SlideId }, null)
-    </p>
-
-    @if (Model.MenuItems.Any())
+    var crumbs = new List<BreadcrumbItemViewModel>
     {
-        <table class="menuitemstable table table-hover">
-            <thead class="thead-dark">
+        new BreadcrumbItemViewModel
+        {
+            Label = "Back to Slide",
+            Url = Url.Action("SlideDetails", "Slide", new {id = Model.SlideId})
+        }
+    };
+
+    Html.RenderPartial("Breadcrumb", crumbs);
+
+
+    <div>
+        <h4>Menu items for @Model.MainMenuHeading</h4>
+        <hr/>
+        <p>
+            @Html.ActionLink("Add Menu Item", "AddItem", "MenuItem", new {menuId = Model.Id, slideId = Model.SlideId}, null)
+        </p>
+
+        @if (Model.MenuItems.Any())
+        {
+            <table class="menuitemstable table table-hover">
+                <thead class="thead-dark">
                 <tr>
                     <th></th>
                     <th>Label</th>
@@ -34,40 +35,46 @@
                     <th class="subtext-box">Sub text</th>
                     <th></th>
                 </tr>
-            </thead>
+                </thead>
 
-            @foreach (var item in Model.MenuItems) {
-                <tr>
-                    <td>
-                        <img width="80" src="@item.ImageUrl" alt="no item image"/>
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Label)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SizeText)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Price)
-                    </td>
-                    <td class="subtext-box">
-                        @Html.DisplayFor(modelItem => item.SubText)
-                    </td>
-                    <td>
+                @foreach (var item in Model.MenuItems)
+                {
+                    <tr>
+                        <td>
+                            <img width="80" src="@item.ImageUrl" alt="no item image"/>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Label)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SizeText)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td class="subtext-box">
+                            @Html.DisplayFor(modelItem => item.SubText)
+                        </td>
+                        <td>
 
-                        <ul class="link-list">
-                            <li>@Html.ActionLink("Edit", "Edit", "MenuItem", new { id = item.Id }, null)</li>
-                            <li>
-                                @Html.ActionLink("Add Image", "AddImage", "MenuItem", new { id = item.Id, slideId = Model.SlideId, returnUrl = Url.Action("Details", "Menu", new { id = Model.Id }) }, null)
-                            </li>
-                            <li>@Html.ActionLink("Delete", "Delete", "MenuItem", new { id = item.Id, slideId = item.SlideId }, null)</li>
-                        </ul>
-                    </td>
-                </tr>
-            }
+                            <ul class="link-list">
+                                <li>@Html.ActionLink("Edit", "Edit", "MenuItem", new {id = item.Id}, null)</li>
+                                <li>
+                                    @Html.ActionLink("Add Image", "AddImage", "MenuItem", new {id = item.Id, slideId = Model.SlideId, returnUrl = Url.Action("Details", "Menu", new {id = Model.Id})}, null)
+                                </li>
+                                <li>@Html.ActionLink("Delete", "Delete", "MenuItem", new {id = item.Id, slideId = item.SlideId}, null)</li>
+                            </ul>
+                        </td>
+                    </tr>
+                }
 
-        </table>
-    }
+            </table>
+        }
 
-</div>
+    </div>
 
+}
+else
+{
+    <div>Model is null</div>
+}
